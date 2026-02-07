@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-07 11:00:08",
+  "generated_at": "2026-02-07 12:00:07",
   "summary": {
     "passed": 8,
     "failed": 2,
@@ -17,14 +17,14 @@
       "provider": "kimi",
       "model": "moonshot-v1-8k",
       "success": true,
-      "status": "OK (Spawn 4.0s)",
+      "status": "OK (Spawn 3.5s)",
       "response": "CLI responded"
     },
     {
       "provider": "nvidia",
       "model": "qwen/qwen2.5-coder-32b-instruct",
       "success": true,
-      "status": "OK (0.27s)",
+      "status": "OK (0.28s)",
       "response": "Hello! How can I assist you today?"
     },
     {
@@ -38,14 +38,14 @@
       "provider": "opencode",
       "model": "glm-4.7-free",
       "success": true,
-      "status": "OK (Spawn 3.0s)",
+      "status": "OK (Spawn 2.7s)",
       "response": "CLI responded"
     },
     {
       "provider": "openrouter",
       "model": "moonshotai/kimi-k2.5",
       "success": true,
-      "status": "OK (Spawn 3.9s)",
+      "status": "OK (Spawn 3.4s)",
       "response": "CLI responded"
     },
     {
