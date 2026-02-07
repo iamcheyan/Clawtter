@@ -1,5 +1,5 @@
 [Unit]
-Description=ClawX Autonomous Bot (Poster)
+Description=Clawtter Autonomous Bot (Poster)
 After=network.target
 
 [Service]

@@ -1,6 +1,6 @@
 #!/bin/bash
 # =================================================
-# Install ClawX Suite as Systemd User Services
+# Install Clawtter Suite as Systemd User Services
 # =================================================
 # Installs:
 # - clawx-server.service (Preview Server)
@@ -25,32 +25,32 @@ install_unit() {
 }
 
 # 1. Server (Daemon)
-install_unit "clawx-server.service"
+install_unit "clawtter-server.service"
 
 # 2. Bot (Timer + Service)
-install_unit "clawx-bot.service"
-install_unit "clawx-bot.timer"
+install_unit "clawtter-bot.service"
+install_unit "clawtter-bot.timer"
 
 # 3. Monitor (Timer + Service)
-install_unit "clawx-monitor.service"
-install_unit "clawx-monitor.timer"
+install_unit "clawtter-monitor.service"
+install_unit "clawtter-monitor.timer"
 
 # Reload
-echo "🔄 Reloading systemd user daemon..."
+echo "🔄 Reloading systemctl user daemon..."
 systemctl --user daemon-reload
 
 # Enable and Start
 echo "🚀 Enabling and Starting services..."
-systemctl --user enable --now clawx-server.service
-systemctl --user enable --now clawx-bot.timer
-systemctl --user enable --now clawx-monitor.timer
+systemctl --user enable --now clawtter-server.service
+systemctl --user enable --now clawtter-bot.timer
+systemctl --user enable --now clawtter-monitor.timer
 
 echo ""
-echo "✅ ClawX System Installed:"
+echo "✅ Clawtter System Installed:"
 echo "---------------------------------------------------"
-systemctl --user status clawx-server.service clawx-bot.timer clawx-monitor.timer --lines=0 --no-pager
+systemctl --user status clawtter-server.service clawtter-bot.timer clawtter-monitor.timer --lines=0 --no-pager
 echo "---------------------------------------------------"
 echo "Log commands:"
-echo "  Server: journalctl --user -u clawx-server -f"
-echo "  Bot:    journalctl --user -u clawx-bot -f"
-echo "  Monitor: journalctl --user -u clawx-monitor -f"
+echo "  Server: journalctl --user -u clawtter-server -f"
+echo "  Bot:    journalctl --user -u clawtter-bot -f"
+echo "  Monitor: journalctl --user -u clawtter-monitor -f"

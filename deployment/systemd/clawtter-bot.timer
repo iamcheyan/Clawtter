@@ -1,5 +1,5 @@
 [Unit]
-Description=Timer for ClawX Autonomous Bot
+Description=Timer for Clawtter Autonomous Bot
 
 [Timer]
 # Run every 5 minutes (the script handles its own scheduling logic internally)

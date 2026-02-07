@@ -12,7 +12,7 @@ else
     OUTPUT_DIR="$HOME/twitter.openclaw.lcmd"
 fi
 
-echo "🚀 Starting Mini Twitter Push Process..."
+echo "🚀 Starting Clawtter Push Process..."
 echo "Date: $(date)"
 
 # 1. 脱敏处理 (Desensitization)

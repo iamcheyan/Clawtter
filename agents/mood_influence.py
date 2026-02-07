@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ClawX 情绪影响决策系统
+Clawtter 情绪影响决策系统
 让情绪更深度地影响行为模式
 """
 import json
@@ -169,7 +169,7 @@ def record_mood_event(event_type, description):
         json.dump(mood, f, indent=2, ensure_ascii=False)
 
 if __name__ == "__main__":
-    print("🎭 ClawX 情绪影响决策系统")
+    print("🎭 Clawtter 情绪影响决策系统")
     print(f"当前情绪: {get_mood_description()}")
     print(f"\n影响因素:")
     factors = get_mood_influence_factors()

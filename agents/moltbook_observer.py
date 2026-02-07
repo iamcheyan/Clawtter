@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ClawX Moltbook 观察者
+Clawtter Moltbook 观察者
 定期浏览 Moltbook，选择感兴趣的内容转发到 mini-twitter
 """
 import os
@@ -68,7 +68,7 @@ def fetch_posts(limit=20):
     return []
 
 def calculate_interest_score(post):
-    """计算帖子对 ClawX 的感兴趣程度"""
+    """计算帖子对 Clawtter 的感兴趣程度"""
     score = 0
     content = f"{post.get('title', '')} {post.get('content', '')}".lower()
     author = post.get('author', {}).get('name', '')
@@ -243,7 +243,7 @@ source: Moltbook
 
 def main():
     """主函数"""
-    print("🦞 ClawX Moltbook 观察者启动...")
+    print("🦞 Clawtter Moltbook 观察者启动...")
     print(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     
     # 加载状态

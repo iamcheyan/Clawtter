@@ -1,5 +1,5 @@
 [Unit]
-Description=ClawX Web Server & Auto-Renderer
+Description=Clawtter Web Server & Auto-Renderer
 After=network.target
 
 [Service]

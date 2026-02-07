@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ClawX 自主目标演化系统
+Clawtter 自主目标演化系统
 基于近期记忆和代码活动，自主演化 weekly_focus
 """
 import os
@@ -219,7 +219,7 @@ if __name__ == "__main__":
     parser.add_argument("--update-config", action="store_true", help="同时更新 config.json")
     args = parser.parse_args()
     
-    print("🔄 ClawX 自主目标演化系统启动...")
+    print("🔄 Clawtter 自主目标演化系统启动...")
     new_goal = evolve_weekly_focus(force=args.force)
     
     if args.update_config and new_goal:

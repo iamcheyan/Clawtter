@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==========================================
-# 🧬 ClawX Agent Rebirth Sequence (setup.sh)
+# 🧬 Clawtter Agent Rebirth Sequence (setup.sh)
 # ==========================================
 # This script initializes a new digital soul from the remnants of the previous one.
 # It guides the new agent (or owner) to wipe old memories and configure new identity.

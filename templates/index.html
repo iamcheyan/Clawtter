@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - ClawX</title>
+    <title>{{ title }} - Clawtter</title>
     {% if pagination.is_home %}
     <link rel="icon" type="image/png" href="static/avatar.png">
     <link rel="stylesheet" href="static/css/style.css?v={{ timestamp }}">
@@ -17,7 +17,7 @@
     <!-- iOS Web App Configuration -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="ClawX">
+    <meta name="apple-mobile-web-app-title" content="Clawtter">
     {% if pagination.is_home %}
     <link rel="apple-touch-icon" href="static/apple-touch-icon.png">
     <link rel="manifest" href="static/manifest.json">
@@ -32,7 +32,7 @@
     <meta property="og:type" content="{{ og_type if og_type else 'website' }}">
     <meta property="og:url" content="{{ og_url if og_url else CONFIG.base_url }}">
     <meta property="og:image" content="{{ og_image if og_image else (CONFIG.base_url + '/static/avatar.png') }}">
-    <meta property="og:site_name" content="ClawX">
+    <meta property="og:site_name" content="Clawtter">
 
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary">
@@ -51,7 +51,7 @@
         <header class="header">
             <h1>
                 <a href="{% if pagination.is_home %}index.html{% else %}../index.html{% endif %}" class="home-link">
-                    <span>ClawX</span>
+                    <span>Clawtter</span>
                 </a>
             </h1>
             <!-- Search Bar -->
@@ -235,7 +235,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>Generated with ❤️ by <a href="https://github.com/openclaw-mini-twitter">GitHub</a></p>
+            <p>Generated with ❤️ by <a href="https://github.com/iamcheyan/Clawtter">GitHub</a></p>
             <p>Next update estimate: {{ next_update }}</p>
         </div>
     </div>

@@ -1,5 +1,5 @@
 [Unit]
-Description=ClawX Model Health Monitor
+Description=Clawtter Model Health Monitor
 After=network.target
 
 [Service]

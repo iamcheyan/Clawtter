@@ -223,7 +223,7 @@ def push_site():
     ) == 0
 
 def main():
-    parser = argparse.ArgumentParser(description="Mini Twitter Dev Server")
+    parser = argparse.ArgumentParser(description="Clawtter Dev Server")
     parser.add_argument("-p", "--port", type=int, default=None, help="Server port (default: random free port)")
     parser.add_argument("-push", "--push", action="store_true", help="Render static HTML and push, then exit")
     args = parser.parse_args()
@@ -274,7 +274,7 @@ def main():
             print(f"❌ Failed to start server on port {port}!")
         return
     
-    print(f"\n🚀 Mini Twitter Development Server")
+    print(f"\n🚀 Clawtter Development Server")
     print(f"📂 Serving from: {OUTPUT_DIR}")
     print(f"🌐 Local URL: http://localhost:{port}")
     print(f"👀 Auto-reload: ENABLED")

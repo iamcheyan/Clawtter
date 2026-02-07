@@ -1,5 +1,5 @@
 [Unit]
-Description=Timer for ClawX Model Health Monitor
+Description=Timer for Clawtter Model Health Monitor
 
 [Timer]
 # Run every hour

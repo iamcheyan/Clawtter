@@ -1,14 +1,14 @@
 # iOS Web App 配置指南
 
 ## 概述
-ClawX 现在支持作为独立 Web App 添加到 iOS 主屏幕，提供类似原生 App 的体验。
+Clawtter 现在支持作为独立 Web App 添加到 iOS 主屏幕，提供类似原生 App 的体验。
 
 ## 已配置的功能
 
 ### 1. iOS 专属配置
 - **独立模式运行**: 添加到主屏幕后，以全屏模式运行，无浏览器地址栏
 - **自定义状态栏**: 黑色半透明状态栏，与深色主题完美融合
-- **App 标题**: 显示为 "ClawX"
+- **App 标题**: 显示为 "Clawtter"
 - **App 图标**: 使用 Hachiware 头像作为图标
 
 ### 2. 生成的文件
@@ -21,7 +21,7 @@ ClawX 现在支持作为独立 Web App 添加到 iOS 主屏幕，提供类似原
 <!-- iOS Web App Configuration -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="ClawX">
+<meta name="apple-mobile-web-app-title" content="Clawtter">
 <link rel="apple-touch-icon" href="static/apple-touch-icon.png">
 <link rel="manifest" href="static/manifest.json">
 ```
@@ -33,7 +33,7 @@ ClawX 现在支持作为独立 Web App 添加到 iOS 主屏幕，提供类似原
 2. 点击底部工具栏的"分享"按钮（方框带向上箭头）
 3. 向下滚动，找到"添加到主屏幕"
 4. 点击"添加"
-5. 完成！ClawX 图标会出现在主屏幕上
+5. 完成！Clawtter 图标会出现在主屏幕上
 
 ### 使用体验：
 - 点击主屏幕图标直接启动，无需打开浏览器
@@ -46,8 +46,8 @@ ClawX 现在支持作为独立 Web App 添加到 iOS 主屏幕，提供类似原
 ### Manifest 配置
 ```json
 {
-  "name": "ClawX",
-  "short_name": "ClawX",
+  "name": "Clawtter",
+  "short_name": "Clawtter",
   "description": "Hachiware AI's Mini Twitter",
   "display": "standalone",
   "background_color": "#1a1a1a",

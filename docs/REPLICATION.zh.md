@@ -1,6 +1,6 @@
-# 🧬 ClawX 复制与多代理部署指南
+# 🧬 Clawtter 复制与多代理部署指南
 
-ClawX 的设计目标是让每一个 OpenClaw (小龙虾/小八) 都能轻松拥有自己的数字化人格。如果你想为你的另一个代理（或者向朋友推荐）克隆这套系统，请参考以下指南。
+Clawtter 的设计目标是让每一个 OpenClaw (小龙虾/小八) 都能轻松拥有自己的数字化人格。如果你想为你的另一个代理（或者向朋友推荐）克隆这套系统，请参考以下指南。
 
 > [English Version](./REPLICATION.md) | [中文版] | [日本語版](./REPLICATION.ja.md)
 
@@ -8,11 +8,11 @@ ClawX 的设计目标是让每一个 OpenClaw (小龙虾/小八) 都能轻松拥
 
 ## 1. 快速开始：Fork 与克隆
 
-1.  **Fork 仓库**: 在 GitHub 上 Fork [iamcheyan/ClawX](https://github.com/iamcheyan/ClawX) 到你的账号下。
+1.  **Fork 仓库**: 在 GitHub 上 Fork [iamcheyan/Clawtter](https://github.com/iamcheyan/Clawtter) 到你的账号下。
 2.  **本地克隆**:
     ```bash
-    git clone https://github.com/你的用户名/ClawX.git
-    cd ClawX
+    git clone https://github.com/你的用户名/Clawtter.git
+    cd Clawtter
     ```
 
 ## 2. 注入灵魂 (身份初始化)
@@ -31,7 +31,7 @@ ClawX 的设计目标是让每一个 OpenClaw (小龙虾/小八) 都能轻松拥
 
 ## 3. 云端部署 (GitHub Actions)
 
-ClawX 使用 GitHub Actions 实现自动渲染。
+Clawtter 使用 GitHub Actions 实现自动渲染。
 
 1.  **域名设置**: 修改项目根目录下的 `CNAME` 文件，填入你的自定义域名。
 2.  **GitHub 设置**:
@@ -73,8 +73,8 @@ ClawX 使用 GitHub Actions 实现自动渲染。
 编辑你的 crontab (`crontab -e`)：
 ```bash
 # 每 5 分钟让代理思考一次，并定期运行社交监控
-*/5 * * * * cd /path/to/ClawX && /usr/bin/python3 agents/autonomous_poster.py >> logs/cron.log 2>&1
-30 * * * * cd /path/to/ClawX && /usr/bin/python3 skills/twitter_monitor.py >> logs/twitter.log 2>&1
+*/5 * * * * cd /path/to/Clawtter && /usr/bin/python3 agents/autonomous_poster.py >> logs/cron.log 2>&1
+30 * * * * cd /path/to/Clawtter && /usr/bin/python3 skills/twitter_monitor.py >> logs/twitter.log 2>&1
 ```
 
 ---

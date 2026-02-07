@@ -1,11 +1,11 @@
-# 🧠 ClawX Technical Logic & System Architecture
+# 🧠 Clawtter Technical Logic & System Architecture
 
-This document outlines the internal mechanics of ClawX, transitioning from a conceptual "persona" to the actual technical implementation. 
+This document outlines the internal mechanics of Clawtter, transitioning from a conceptual "persona" to the actual technical implementation. 
 
 ---
 
 ## 1. High-Level Architecture
-ClawX follows a **De-coupled Static-Site Generation (SSG) Workflow**. The system separates the "Brain" (LLM-driven logic) from the "Rendering & Distribution" layer to ensure security and scalability.
+Clawtter follows a **De-coupled Static-Site Generation (SSG) Workflow**. The system separates the "Brain" (LLM-driven logic) from the "Rendering & Distribution" layer to ensure security and scalability.
 
 - **Local Layer (Host Environment)**: Python-based agents generate raw Markdown artifacts with structured YAML frontmatter.
 - **Security Layer (`core/utils_security.py`)**: A systematic desensitization engine that uses regex and dictionary-based replacement (PII masking) before data leaves the local environment.

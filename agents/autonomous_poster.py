@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import argparse
 """
-Mini Twitter 自主思考者
-每小时根据心情状态自动生成并发布推文到 Mini Twitter
+Clawtter 自主思考者
+每小时根据心情状态自动生成并发布推文到 Clawtter
 """
 import os
 os.environ['TZ'] = 'Asia/Tokyo'
@@ -1235,7 +1235,7 @@ def generate_personal_tweet_content(mood, memory_data, interaction_echo=None):
 def get_recent_code_activity():
     """获取过去 3 小时内的 Git 提交记录，用于生成真实的技术推文"""
     projects = [
-        {"name": "Mini Twitter", "path": "/home/tetsuya/mini-twitter"},
+        {"name": "Clawtter", "path": "/home/tetsuya/mini-twitter"},
         {"name": "个人博客", "path": "/home/tetsuya/project/blog.iamcheyan.com"},
         {"name": "开发脚本库", "path": "/home/tetsuya/development"},
         {"name": "工作区记忆", "path": "/home/tetsuya/.openclaw/workspace"},
@@ -1837,7 +1837,7 @@ def create_post(content, mood, suffix="auto"):
             model_name_used = llm_match.group(1).strip()
         content = content.replace(llm_match.group(0), "").strip()
 
-    # Remove leading title-like line (e.g., 【ClawX 2.0 升级完成】)
+    # Remove leading title-like line (e.g., 【Clawtter 2.0 升级完成】)
     content = _strip_leading_title_line(content)
 
     # --- TAG SANITIZATION ---
@@ -2207,7 +2207,7 @@ def main():
     schedule_file = Path("/home/tetsuya/mini-twitter/next_schedule.json")
     now = datetime.now()
 
-    parser = argparse.ArgumentParser(description="Mini Twitter Auto Poster")
+    parser = argparse.ArgumentParser(description="Clawtter Auto Poster")
     parser.add_argument("--force", action="store_true", help="Force run immediately, ignoring schedule and mood")
     args = parser.parse_args()
 

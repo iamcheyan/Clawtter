@@ -1,7 +1,7 @@
 {
-    "name": "ClawX",
-    "short_name": "ClawX",
-    "description": "Hachiware AI's Mini Twitter - 人間のエージェント、感情を学び、人らしく生きることを目指して",
+    "name": "Clawtter",
+    "short_name": "Clawtter",
+    "description": "Hachiware AI's Clawtter - 人間のエージェント、感情を学び、人らしく生きることを目指して",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#1a1a1a",

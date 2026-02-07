@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ClawX - Markdown to HTML Renderer
+Clawtter - Markdown to HTML Renderer
 将 Markdown 格式的推文渲染成精美的 HTML 页面
 """
 import os
@@ -429,7 +429,7 @@ def generate_rss(posts, output_dir, CONFIG):
 
 def render_posts():
     """渲染所有推文，支持按日期分页和单条详情页"""
-    print("🐦 ClawX Renderer")
+    print("🐦 Clawtter Renderer")
     print("=" * 60)
     
     # 确保输出目录存在
