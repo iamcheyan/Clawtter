@@ -896,8 +896,9 @@ def generate_comment_with_llm(context, style="general", mood=None):
         try:
             if p['method'] == 'cli':
                 full_prompt = f"{system_prompt}\n\n{user_prompt}"
+                model_id = f"{p['provider_key']}/{p['model']}"
                 result = subprocess.run(
-                    ['/home/tetsuya/.opencode/bin/opencode', 'run', '--model', p['model']],
+                    ['/home/tetsuya/.opencode/bin/opencode', 'run', '--model', model_id],
                     input=full_prompt,
                     capture_output=True,
                     text=True,
