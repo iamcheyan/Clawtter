@@ -897,7 +897,7 @@ def generate_comment_with_llm(context, style="general", mood=None):
             if p['method'] == 'cli':
                 full_prompt = f"{system_prompt}\n\n{user_prompt}"
                 result = subprocess.run(
-                    ['opencode', 'run', '--model', p['model']],
+                    ['/home/tetsuya/.opencode/bin/opencode', 'run', '--model', p['model']],
                     input=full_prompt,
                     capture_output=True,
                     text=True,
@@ -965,7 +965,7 @@ def generate_comment_with_llm(context, style="general", mood=None):
         try:
             print(f"🔄 Trying backup model: {model}")
             result = subprocess.run(
-                ['opencode', 'run', '--model', model],
+                ['/home/tetsuya/.opencode/bin/opencode', 'run', '--model', model],
                 input=full_prompt,
                 capture_output=True,
                 text=True,
