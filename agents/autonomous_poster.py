@@ -26,6 +26,13 @@ from core.utils_security import load_config, resolve_path, desensitize_text
 # 加载安全配置
 SEC_CONFIG = load_config()
 
+# 敏感词定义（全局）
+SENSITIVE_KEYWORDS = [
+    "验证码", "verification code", "verification_code",
+    "密钥", "api key", "apikey", "secret", "credential",
+    "claim", "token", "password", "密码", "scuttle"
+]
+
 # 兴趣漂移配置
 INTEREST_STATE_FILE = "/home/tetsuya/.openclaw/workspace/memory/interest-drift.json"
 INTEREST_DECAY = 0.90
@@ -254,6 +261,51 @@ def get_task_history():
     except Exception:
         pass
     return []
+
+
+def extract_interaction_echo(memory_data):
+    """从最近记忆里提取一条安全的互动回声（避免敏感信息）"""
+    if not memory_data:
+        return None
+
+    keywords = ["人类", "tetsuya", "互动", "交流", "对话", "聊天", "讨论", "协作", "一起", "回应", "反馈", "指示", "陪伴"]
+    extra_sensitive = [
+        "http", "https", "/home/", "~/", "api", "apikey", "api key", "token",
+        "password", "密码", "credential", "verification", "验证码", "密钥", "key",
+        "claim", "sk-"
+    ]
+
+    text = "\n".join([m.get("content", "") for m in memory_data if m.get("content")])
+    text = desensitize_text(text)
+    candidates = []
+
+    for raw in text.splitlines():
+        line = raw.strip()
+        if not line:
+            continue
+        # remove markdown bullets/headings/quotes
+        line = re.sub(r'^[#>\-\*\d\.\s]+', '', line).strip()
+        if not line:
+            continue
+        lower = line.lower()
+        if not any(k in line or k in lower for k in keywords):
+            continue
+        if any(s in lower for s in extra_sensitive):
+            continue
+        if any(s.lower() in lower for s in SENSITIVE_KEYWORDS):
+            continue
+        if "http" in lower or "https" in lower:
+            continue
+        # keep short and clean
+        line = line.replace(""", "").replace(""", "").replace('"', '').replace("'", "")
+        line = re.sub(r'`.*?`', '', line).strip()
+        if 6 <= len(line) <= 80:
+            candidates.append(line)
+
+    if not candidates:
+        return None
+    picked = random.choice(candidates)
+    return picked[:60].rstrip()
 
 def extract_detail_anchors(memory_data=None, code_activity=None):
     """提取细节锚点（去敏、短句）"""
@@ -1357,12 +1409,6 @@ MAX_DAILY_RAMBLINGS = 2
 INSOMNIA_POST_PROB = 0.05
 
 # 全局敏感词库 - Security Hook
-SENSITIVE_KEYWORDS = [
-    "验证码", "verification code", "verification_code",
-    "密钥", "api key", "apikey", "secret", "credential",
-    # "链接", "link", "http", "https", # 在 create_post 里做特殊逻辑处理，不在这里全局死杀
-    "claim", "token", "password", "密码", "scuttle"
-]
 
 def load_mood():
     """加载心情状态"""
