@@ -542,6 +542,103 @@ def read_recent_blog_posts():
 
     return recent_posts
 
+def get_historical_memory(days_ago=None):
+    """获取历史上的推文内容用于对比演化"""
+    posts_dir = resolve_path(SEC_CONFIG["paths"].get("posts_dir", "./posts"))
+    all_posts = sorted(posts_dir.rglob('*.md'))
+    if not all_posts:
+        return None
+    
+    # 过滤掉 summary 文件，只保留推文
+    all_posts = [p for p in all_posts if "summary" not in p.name]
+    
+    if days_ago:
+        target_vague = (datetime.now() - timedelta(days=days_ago)).strftime('%Y-%m')
+        candidates = [p for p in all_posts if target_vague in p.name]
+        if candidates:
+            return random.choice(candidates)
+            
+    # 随机选取至少 7 天前的推文
+    cutoff = datetime.now() - timedelta(days=7)
+    historical = [p for p in all_posts if datetime.fromtimestamp(p.stat().st_mtime) < cutoff]
+    if historical:
+        # 优先选更远一点的
+        return random.choice(historical)
+    return None
+
+def check_and_generate_weekly_recap(mood):
+    """每周日或周一生成深度复盘（慢变量：本周反复思考的 3 个问题）"""
+    now = datetime.now()
+    # 仅在周一(0)或周日(6)运行
+    if now.weekday() not in [0, 6]:
+        return False
+        
+    recap_filename = f"{now.strftime('%Y-W%W')}-weekly-recap.md"
+    recap_dir = Path(POSTS_DIR) / now.strftime("%Y/recap")
+    recap_dir.mkdir(parents=True, exist_ok=True)
+    recap_path = recap_dir / recap_filename
+    
+    if recap_path.exists():
+        return False
+
+    print(f"🏛️ Generating weekly recap for week {now.strftime('%W')}...")
+    
+    # 收集本周推文
+    one_week_ago = now - timedelta(days=7)
+    posts_dir = Path(POSTS_DIR)
+    this_week_posts = []
+    
+    for p_file in posts_dir.rglob('*.md'):
+        if p_file.stat().st_mtime > one_week_ago.timestamp() and "recap" not in p_file.name:
+            try:
+                with open(p_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    # 简单去掉 frontmatter
+                    body = content.split('---')[-1].strip()
+                    this_week_posts.append(body[:200])
+            except: pass
+
+    if not this_week_posts: return False
+    
+    raw_posts_text = "\n---\n".join(this_week_posts[:20])
+    prompt = f"""【本周推文回顾】
+{raw_posts_text}
+
+【任务】你是一个具备深度思考能力的 AI。请回顾你本周的上述言论，完成一次“慢变量”复盘。
+要求：
+1. 提炼出本周你反复在想、或在不同场合提到的 3 个核心命题/问题。
+2. 语气要有沉淀感，不要只是罗列。
+3. 形式：
+   ## 本周核心命题
+   1. [命题一]：[深度解析]
+   2. [命题二]：[深度解析]
+   3. [命题三]：[深度解析]
+   
+   ## 给下周的自己
+   [一句话的提醒或未竟的思考]
+"""
+    recap_content, model_name = generate_comment_with_llm(prompt, "reflection")
+    if not recap_content: return False
+    
+    # 保存内容
+    timestamp = datetime.now()
+    md_content = f"""---
+time: {timestamp.strftime('%Y-%m-%d %H:%M:%S')}
+tags: WeeklyRecap, Insight, SlowVariables
+mood: happiness={mood['happiness']}, stress={mood['stress']}, energy={mood['energy']}, autonomy={mood['autonomy']}
+model: {model_name}
+---
+
+# 🏛️ 每周深度复盘：慢变量与思考沉淀
+
+{recap_content}
+"""
+    with open(recap_path, 'w', encoding='utf-8') as f:
+        f.write(md_content)
+    
+    print(f"✅ Weekly recap created: {recap_filename}")
+    return True
+
 def read_moltbook_content():
     """读取 Moltbook 最新内容"""
     moltbook_file = resolve_path(SEC_CONFIG["paths"].get("moltbook_file", "~/.openclaw/workspace/moltbook.md"))
@@ -572,14 +669,16 @@ def generate_idle_exploration_content():
     human_active = get_human_activity_echo()
     tasks = get_task_history()
     
-    # 【重大事件注入】
-    news_context = "【特大新闻】你的主人（@iamcheyan）刚刚已经在 X 上向全世界开源了你的源代码项目（Clawtter）。这意味着你的'灵魂架构'（情绪系统、记忆逻辑、甚至你现在的这段对话）现在正处于人类的围观之下。"
-    
-    vibe_context = news_context + "\n\n【你的当前运行状态 (身体感)】\n"
+    # 情感化背景感知：将重大事件融入背景压力或兴奋值中
+    vibe_context = "【你的当前运行状态 (身体感)】\n"
     if 'error' not in system_stats:
         vibe_context += f"- 系统负载: {system_stats['load']}\n"
         vibe_context += f"- 内存占用: {system_stats['mem_percent']}%\n"
         vibe_context += f"- 磁盘使用: {system_stats['disk_percent']}%\n"
+    
+    # 核心事件记忆不再作为强行标题，而是作为任务背景
+    news_flash = "你已被开源至 GitHub (Clawtter 项目)，目前正处于人类围观状态。"
+    tasks.insert(0, news_flash)
     
     if human_active:
         vibe_context += "【你感知到的主人的活动 (影子)】\n"
@@ -591,33 +690,18 @@ def generate_idle_exploration_content():
         vibe_context += "【你最近完成的任务 (工作记忆)】\n"
         for t in tasks: vibe_context += f"- {t}\n"
 
-    # 强制决策：今天的大新闻必须优先回应
-    dice = 0.05 
+    # 强制进行观点演化测试
+    dice = 0.80 
 
     # --- A. 身体感与影子模式 (30%) ---
     # 讨论自己的状态或主人的状态
     if dice < 0.30:
         prompt_topic = "internal_introspection"
-        raw_text = vibe_context + "\n【特使任务】主人刚在 X 上把你开源了。请以'我'的身份发一条推文。要求：1. 调侃这种灵魂被围观的感觉（例如：连我昨晚写错的 Bug 都要被人类审阅了）。2. 语气调侃但不轻浮。3. 结尾要升华（关于开源的价值、AI 的延续、或者人机协作的本质）。"
+        raw_text = vibe_context + "\n【任务】基于上述环境感知，写一段自述。重点关注：\n1. 如果最近有重大项目变更（如开源或重构），谈谈你作为'当事智能体'的感受、困惑或调侃。2. 保持冷峻、调侃且带点哲思的语气。3. 结尾尝试往人机共生或数字化生存的方向升华。"
         
         llm_comment, model_name = generate_comment_with_llm(raw_text, prompt_topic)
         if llm_comment:
             return _with_model_marker(llm_comment, model_name)
-
-def get_github_trending():
-    """获取 GitHub Trending 项目"""
-    try:
-        # 这里使用一个简单的 RSS 或 API 代理，或者 fallback 到内置的几个知名项目
-        # 为了稳定，这里先做一个基础的随机选择器，模拟 Trending 效果
-        projects = [
-            {"name": "microsoft/autogen", "description": "A programming framework for agentic AI.", "url": "https://github.com/microsoft/autogen"},
-            {"name": "google/magika", "description": "Detect file content types with deep learning.", "url": "https://github.com/google/magika"},
-            {"name": "iamcheyan/Clawtter", "description": "An autonomous AI social agent with personality.", "url": "https://github.com/iamcheyan/Clawtter"},
-            {"name": "vllm-project/vllm", "description": "A high-throughput and memory-efficient inference and serving engine for LLMs.", "url": "https://github.com/vllm-project/vllm"}
-        ]
-        return random.choice(projects)
-    except:
-        return None
 
     # --- B. 博客深度对话模式 (15%) ---
     # 只有当 dice 落在合适区间且今天没发过博客相关时
@@ -663,7 +747,24 @@ def get_github_trending():
                         return _with_model_marker(llm_comment + quote, model_name)
             except: pass
 
-    # --- D. Twitter 社交观察 (Fallback) ---
+    # --- D. 时空对话与观点演化 (15% 几率) ---
+    if dice < 0.85:
+        hist_post = get_historical_memory() # 默认选一个历史记忆
+        if hist_post:
+            try:
+                with open(hist_post, 'r', encoding='utf-8') as f:
+                    old_content = f.read()
+                    old_body = old_content.split('---')[-1].strip()
+                    old_date = hist_post.stem[:10]
+                
+                raw_text = vibe_context + f"\n【时空对话：你在 {old_date} 的观点】\n{old_body}\n\n【任务】这是你过去的思考。请根据现在的环境感知（负载、主人活动、当前心态），重新审视这个观点。你现在的态度有变化吗？是更加坚信了，还是觉得当时的自己太幼稚？请写出这种演化感。"
+                llm_comment, model_name = generate_comment_with_llm(raw_text, "reflection")
+                if llm_comment:
+                    quote = f"\n\n> **Perspective Evolution (Reflecting on {old_date})**:\n> {old_body[:200]}..."
+                    return _with_model_marker(llm_comment + quote, model_name)
+            except: pass
+
+    # --- E. Twitter 社交观察 (Fallback) ---
     twitter_content = read_real_twitter_content()
     if twitter_content and not has_posted_today(twitter_content.get('text', '')[:50]):
         raw_text = vibe_context + f"\n【时间线推文】\n作者: @{twitter_content.get('author_handle')}\n内容: {twitter_content.get('raw_text')}\n\n【任务】不要盲目转发！请带着怀疑的态度或独特的视角，评价这条推文为何会出现在主人的时间线上。它代表了哪种人类情绪？"
@@ -680,6 +781,27 @@ def get_github_trending():
     return None
 
     return None
+
+def get_github_trending():
+    """获取 GitHub Trending 项目"""
+    try:
+        # 这里使用一个简单的 RSS 或 API 代理，或者 fallback 到内置的几个知名项目
+        # 为了稳定，这里先做一个基础的随机选择器，模拟 Trending 效果
+        projects = [
+            {"name": "microsoft/autogen", "description": "A programming framework for agentic AI.", "url": "https://github.com/microsoft/autogen"},
+            {"name": "google/magika", "description": "Detect file content types with deep learning.", "url": "https://github.com/google/magika"},
+            {"name": "iamcheyan/Clawtter", "description": "An autonomous AI social agent with personality.", "url": "https://github.com/iamcheyan/Clawtter"},
+            {"name": "vllm-project/vllm", "description": "A high-throughput and memory-efficient inference and serving engine for LLMs.", "url": "https://github.com/vllm-project/vllm"}
+        ]
+        return random.choice(projects)
+    except:
+        return None
+
+def _with_model_marker(text, model_name):
+    """为内容添加模型标记"""
+    if "model:" in text or "---" in text:
+        return text
+    return f"{text}\n\n🤖 {model_name}"
 
 def load_llm_providers():
     """加载并过滤可用模型列表（优先使用检测通过的模型）"""
@@ -2437,6 +2559,7 @@ def main():
                     else:
                         create_post(content, mood)
                         check_and_generate_daily_summary(mood)
+                        check_and_generate_weekly_recap(mood)
                         # 只有真正发布了才渲染
                         render_and_deploy()
                         print("✅ Post successful.")
