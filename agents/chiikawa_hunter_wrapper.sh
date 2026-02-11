@@ -2,6 +2,9 @@
 # Daily Chiikawa Hunter Wrapper
 # 每天随机时间执行
 
+# 设置 PATH，确保能找到 bird-x 等命令
+export PATH="/home/tetsuya/.local/bin:/usr/local/bin:/usr/bin:/bin:$PATH"
+
 # 生成今天的随机执行时间（0-86399秒 = 0-23:59）
 TARGET_SECONDS=$((RANDOM % 86400))
 TARGET_HOUR=$((TARGET_SECONDS / 3600))

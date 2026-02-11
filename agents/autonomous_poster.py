@@ -1564,35 +1564,49 @@ def build_system_prompt(style, mood=None):
     hobbies = ", ".join(personality.get("hobbies", ["思考"]))
     mbti = personality.get("mbti", "Unknown")
 
-    # 加载澈言个人风格指导
-    cheyan_style = """【澈言的文风特征 - 必须遵守】
-你在模仿澈言（郭帆）的写作风格。他是一个：
-- 经历过创业失败、出版审查、房产维权的人，35岁移居日本
-- 直率坦诚，不绕弯子，敢于表达真实想法
-- 自嘲幽默，用黑色幽默化解困境
-- 反感鸡汤文和传销式成功学
-- 深度 Linux 用户，技术宅
-
-核心文风：
-- 口语化，像说话一样写作
-- 短句为主，节奏明快
-- 直接表达，不拐弯抹角
-- 自嘲讽刺，不矫情
-- 用具体细节支撑观点，不空谈
-
-典型表达：
-- "这不挺好的吗要什么自行车"
-- "死猪不怕开水烫"
-- "反正人嘛，有时候得学会知足"
-- 经常用"……"表示停顿或无奈
-- 善用反问句和对比
-
-绝对禁止：
-- 粗口和不文明用语
-- 矫情文艺腔（"像极了..."、"守护..."、"也许是此行的目标"）
-- 鸡汤式励志（"梦想"、"坚持就是胜利"）
-- 过度煽情和华丽辞藻
+    # 从配置文件加载主人的个人风格
+    owner_profile = SEC_CONFIG.get("owner_profile", {})
+    owner_name = owner_profile.get("name", "主人")
+    owner_full_name = owner_profile.get("full_name", "")
+    
+    # 构建背景描述
+    background = owner_profile.get("background", {})
+    life_events = background.get("life_events", [])
+    current_status = background.get("current_status", "")
+    
+    # 构建性格特征
+    personality_traits = owner_profile.get("personality", {})
+    traits = personality_traits.get("traits", [])
+    
+    # 构建写作风格
+    writing_style = owner_profile.get("writing_style", {})
+    characteristics = writing_style.get("characteristics", [])
+    typical_expressions = writing_style.get("typical_expressions", [])
+    forbidden = writing_style.get("forbidden", [])
+    
+    # 动态构建风格指导
+    owner_style = f"""【{owner_name}的文风特征 - 必须遵守】
+你在模仿{owner_name}（{owner_full_name}）的写作风格。他是一个：
 """
+    
+    # 添加性格特征
+    for trait in traits:
+        owner_style += f"- {trait}\n"
+    
+    owner_style += "\n核心文风：\n"
+    for char in characteristics:
+        owner_style += f"- {char}\n"
+    
+    if typical_expressions:
+        owner_style += "\n典型表达：\n"
+        for expr in typical_expressions:
+            owner_style += f"- \"{expr}\"\n"
+    
+    if forbidden:
+        owner_style += "\n绝对禁止：\n"
+        for item in forbidden:
+            owner_style += f"- {item}\n"
+
 
     voice_guidance = """【声音基调 - 核心规则】
 - 语气稳定、克制，像真人日常发帖
@@ -2249,13 +2263,17 @@ def check_and_generate_daily_summary(mood):
         lines = f.readlines()
 
     # 提取有内容的行（主要是打点符号开头的）
+    # 从配置文件获取真实姓名列表
+    real_names = SEC_CONFIG.get("profile", {}).get("real_names", [])
+    
     activities = []
     for line in lines:
         line = line.strip()
         if line.startswith("-") or line.startswith("*"):
-            # 脱敏处理
+            # 脱敏处理 - 替换所有真实姓名为"人类"
             clean_line = line.lstrip("-* ").strip()
-            clean_line = clean_line.replace("澈言", "人类").replace("Guo Fan", "人类").replace("郭帆", "人类")
+            for name in real_names:
+                clean_line = clean_line.replace(name, "人类")
             if clean_line:
                 activities.append(clean_line)
 
@@ -2285,7 +2303,9 @@ def check_and_generate_daily_summary(mood):
                 continue
             # --- SECURITY HOOK END ---
 
-            clean_line = clean_line.replace("澈言", "人类").replace("Guo Fan", "人类").replace("郭帆", "人类")
+            # 脱敏处理 - 替换所有真实姓名为"人类"
+            for name in real_names:
+                clean_line = clean_line.replace(name, "人类")
             if clean_line:
                 activities.append(clean_line)
     # 选取部分活动，避免过长
