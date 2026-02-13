@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-02-14 00:00:21",
+  "generated_at": "2026-02-14 01:00:20",
   "summary": {
-    "passed": 6,
-    "failed": 9,
+    "passed": 7,
+    "failed": 8,
     "total": 15
   },
   "results": [
@@ -10,21 +10,28 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.93s)",
+      "status": "OK (0.87s)",
+      "response": "Response matched but unexpected format"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "success": true,
+      "status": "OK (4.12s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.83s)",
-      "response": "Hi"
+      "status": "OK (1.08s)",
+      "response": "Response matched but unexpected format"
     },
     {
       "provider": "nvidia",
       "model": "qwen/qwen2.5-coder-32b-instruct",
       "success": true,
-      "status": "OK (0.26s)",
+      "status": "OK (1.40s)",
       "response": "Hello! How can I assist you today?"
     },
     {
@@ -45,8 +52,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.48s)",
-      "response": "\u4f60\u597d\ud83d\udc4b\uff01\u5f88\u9ad8\u5174\u89c1\u5230\u4f60\uff0c"
+      "status": "OK (1.80s)",
+      "response": "Hi there \ud83d\udc4b! How can I assist"
     },
     {
       "provider": "_disabled_LCMD",
@@ -75,13 +82,6 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
-    },
-    {
-      "provider": "google",
-      "model": "gemini-2.5-pro",
-      "success": false,
-      "status": "Err 503",
-      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
     },
     {
       "provider": "nvidia-kimi",
