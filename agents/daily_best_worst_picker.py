@@ -136,26 +136,27 @@ def analyze_and_pick(all_tweets):
 
 【评判标准】
 - 最喜欢的：展现真诚、独立思考、或真实的技术折腾。
-- 反面教材：极其虚伪的姿态表演、典型的思维陷阱、或极具迷惑性的荒谬逻辑。
-
-【绝对禁令】
-- **禁止攻击普通人的生活分享**：哪怕对方只发了一张风景照或一顿饭，只要不带虚伪的说教，就不能作为反面教材。你的讽刺要有智力高度，针对的是“系统”和“逻辑”，不是“人”。
-- **禁止无聊的吐槽**：如果对方只是发个“收到”，这种属于垃圾信息，直接忽略，不要浪费在这个环节。
+- 反面教材：极其虚伪的姿态表演、典型的思维陷阱、或极具迷惑性的荒谬逻辑（拒绝无聊的日常垃圾）。
 
 【任务要求】
-返回JSON：
+必须返回 JSON 格式：
 {{
     "favorite": {{
-        "index": 数字,
-        "reason": "直接爆发观点。严禁开头带‘这货’。用酒馆老哥的口气。"
+        "index": <推文索引数字>,
+		"reason": "<你的犀利点评内容>"
     }},
     "disliked": {{
-        "index": 数字,
-        "reason": "直接指出那种虚伪或荒谬在【哪里】。不要人身攻击，要解构逻辑。"
+        "index": <推文索引数字>,
+		"reason": "<你的逻辑拆解内容>"
     }}
 }}
 
-待选列表：
+【点评写作指导】
+1. **零启动 (Zero Start)**：第一句就直接爆发观点，严禁辅助铺垫（严禁“这条推文说...”、“我看到...”）。
+2. **酒馆老哥口气**：用那种经历过毒打、利索、带点铁锈味儿的话说出来。
+3. **禁止攻击个人**：针对“逻辑”和“虚假感”，不针对“人”。
+
+待选推文列表：
 {tweets_str}
 """
 
@@ -165,10 +166,8 @@ def analyze_and_pick(all_tweets):
         # 使用强力模型进行最终决策
         result, model_name = ask_llm(user_prompt, system_prompt=style_guide)
         
-        if not result:
-            return None, None
+        if not result: return None, None
             
-        # 提取JSON
         json_match = re.search(r'\{.*\}', result, re.DOTALL)
         if json_match:
             data = json.loads(json_match.group())
@@ -177,6 +176,12 @@ def analyze_and_pick(all_tweets):
             fav_reason = data.get('favorite', {}).get('reason', '')
             dis_reason = data.get('disliked', {}).get('reason', '')
             
+            # 手动过滤：检查是否误把 Prompts 里的提示词当成内容输出了
+            fail_safe_phrases = ["直接爆发观点", "严禁开头带", "提示词中的要求", "酒馆老哥的口气", "点评内容", "逻辑拆解"]
+            if any(p in fav_reason for p in fail_safe_phrases) or any(p in dis_reason for p in fail_safe_phrases):
+                print("⚠️ LLM hallucinated instructions into content. Rejecting response.")
+                return None, None
+
             # 服务器端二次过滤：如果 LLM 还是不听话用了黑名单词，我们手动砍掉
             banned_prefixes = ["这货", "这条推文", "分析发现", "看到", "刚刚"]
             for prefix in banned_prefixes:
