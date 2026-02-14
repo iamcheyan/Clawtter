@@ -1342,6 +1342,26 @@ body.local-dev .tweet-delete-btn {
     object-fit: cover;
 }
 
+.cover-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: block;
+    min-height: 200px;
+    /* Placeholder during load */
+}
+
+.tweet-cover {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
 /* 强制让包含图片的段落变成行内排列，防止即便跨 P 标签也换行 */
 .tweet-text p:has(img) {
     display: inline-flex;

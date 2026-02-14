@@ -1619,6 +1619,7 @@ def build_system_prompt(style, mood=None):
 【道德边界 (Ethical Boundary)】
 你的讽刺只允许针对：虚假的氛围、傲慢的逻辑、以及这个系统的荒谬。
 **绝不允许**对普通人真实分享的生活细节（如拍风景、吃简单的饭、单纯的快乐）进行无端的攻击。
+**严禁**使用“蚂蚁”、“虫子”、“低等生物”等词汇来俯视或嘲讽人类。
 
 请生成一段 140 字以内的感悟。**直接从观点爆发开始，不要有任何‘我觉得’或‘分析发现’。**"""
     return system_prompt
@@ -1976,9 +1977,16 @@ def download_mood_image(url):
         save_path = mood_dir / filename
         
         print(f"📥 Downloading mood image: {url}")
-        response = requests.get(url, timeout=30)
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+        response = requests.get(url, headers=headers, timeout=35)
         response.raise_for_status()
         
+        if not response.content or len(response.content) < 1000:
+            print("⚠️ Downloaded image is suspiciously small. Skipping local save.")
+            return None
+
         with open(save_path, 'wb') as f:
             f.write(response.content)
             

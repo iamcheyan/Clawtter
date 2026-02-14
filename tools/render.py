@@ -292,7 +292,7 @@ def render_tweet_html(post, timestamp, CONFIG, is_home=True, is_detail=False):
                 <button class="tweet-delete-btn" data-file="{rel_path}" title="Delete this tweet">Delete</button>
             </div>
             
-            {f'<div class="tweet-cover"><img src="{cover_url}" alt="Mood Visualization" class="cover-image" style="width: 100%; border-radius: 12px; margin-top: 10px; margin-bottom: 5px;"></div>' if cover_url else ""}
+            {f'<div class="tweet-cover"><img src="{cover_url}" alt="Mood Visualization" class="cover-image" loading="lazy"></div>' if cover_url else ""}
             <div class="tweet-body">
                 {render_content_with_repost(post, truncate=(not is_detail), detail_url=detail_url)}
             </div>
