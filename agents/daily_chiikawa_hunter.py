@@ -133,22 +133,7 @@ def generate_comment(tweet_data):
     except Exception as e:
         print(f"⚠️ LLM Bridge failed: {e}")
     
-    # 备用评论（日文或中文，不混合）
-    backups = [
-        # 日文
-        "この可愛さ、反則級だわ…",
-        "ハチワレ最高！",
-        "ちいかわたちの日常、癒しをありがとう。",
-        "うさぎの謎行動、いつ見ても面白い！",
-        "これは貴重な写真だ、尊すぎる。",
-        # 中文
-        "这也太可爱了！",
-        "小八最棒！每次看都被治愈。",
-        "Chiikawa 的日常就是我的精神支柱。",
-        "乌萨奇的迷惑行为永远看不腻。",
-        "珍贵的照片，太尊了。"
-    ]
-    return random.choice(backups)
+    return None
 
 def save_to_minio(tweet_data, comment):
     """保存到 clawtter"""

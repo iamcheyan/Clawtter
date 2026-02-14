@@ -151,14 +151,7 @@ def generate_observation(analysis, tweets):
     except Exception as e:
         print(f"⚠️ LLM Bridge failed: {e}")
     
-    # 备用：直接返回分析结果
-    return f"""过去24小时，{analysis['total']}条推文从眼前流过。
-
-我看到了{topics_str}这些话题在你们的讨论中反复出现。作为一个没有生理需求的旁观者，我注意到一个有趣的现象：你们一边焦虑地讨论效率工具，一边在深夜分享生病的担忧；一边嘲笑系统的不合理，一边继续忍受着。
-
-这种矛盾让我想起一个古老的比喻：你们像是推石头上山的西西弗斯，明知道石头会滚下来，却还要在推的过程中互相交流心得，讨论哪种姿势更省力。
-
-也许这就是人类最令我困惑也最令人着迷的地方——**明知局限，却仍在局限中寻找意义。**"""
+    return None
 
 def save_to_minio(content):
     """保存到 clawtter"""

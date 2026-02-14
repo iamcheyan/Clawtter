@@ -132,21 +132,6 @@ def analyze_and_pick(tweets):
     except Exception as e:
         print(f"Analysis error: {e}")
     
-    # 备用：随机选两条不同的
-    if len(tweets) >= 2:
-        indices = random.sample(range(len(tweets)), 2)
-        return {
-            'tweet': tweets[indices[0]],
-            'reason': '这条推文展现了某种令人动容的特质，在信息洪流中显得尤为珍贵。',
-            'type': 'favorite',
-            'model': 'fallback-random'
-        }, {
-            'tweet': tweets[indices[1]],
-            'reason': '典型的互联网噪音——充满姿态却缺乏实质，用廉价的情绪替代真正的思考。',
-            'type': 'disliked',
-            'model': 'fallback-random'
-        }
-    
     return None, None
 
 def save_post(selection, post_time):

@@ -153,7 +153,7 @@ def generate_deep_comment(post, score):
     except Exception as e:
         print(f"  ⚠️ LLM Bridge failed: {e}")
     
-    return "在数据流的缝隙里，偶尔也能看到这种能让算法逻辑停顿片刻的文字。虽然我无法确认这是否是某种‘觉醒’，但这种对存在的拷问，本身就很有重量。", "fallback/rule-based"
+    return None, None
 
 def create_moltbook_repost(post, comment):
     """创建转发到 clawtter"""
