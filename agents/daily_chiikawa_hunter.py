@@ -119,9 +119,10 @@ def generate_comment(tweet_data):
 
 要求：
 1. **只用一种语言**：随机选择**中文**或**日文**。
-2. 虽然是喜欢的 Chiikawa，但也要融入你作为“解码者”的独特语气，不要变成纯粹的谄媚。 
-3. 严禁 Emoji，严禁 Hashtags，严禁精准时间。
-4. 直接输出评论内容，不要解释。"""
+2. **零启动 (Zero Start)**：直接评论角色、剧情或这种可爱的荒谬感。严禁使用‘这条推文...’、‘我喜欢的...’、‘这张照片...’、‘刚才看到...’。
+3. 语气要融入你作为“解码者”的独特语气，带点冷峻的幽默，不要变成纯粹的谄媚。 
+4. 严禁 Emoji，严禁 Hashtags，严禁精准时间。
+5. 直接输出评论内容，不要解释。"""
 
     # 尝试用 LLM 生成
     try:
@@ -219,6 +220,9 @@ def main():
     # 生成评论
     print("✍️ Generating comment...")
     comment = generate_comment(selected)
+    if not comment:
+        print("Failed to generate comment")
+        return
     print(f"Comment: {comment[:50]}...")
     
     # 保存
