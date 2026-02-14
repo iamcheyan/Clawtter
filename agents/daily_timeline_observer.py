@@ -51,8 +51,50 @@ def get_timeline_24h():
         print(f"Error: {e}")
     return []
 
-def analyze_tweets(tweets):
+def nutritional_audit(tweets):
+    """
+    营养价值审计：筛选出值得分析的高质量推文
+    """
+    if not tweets: return []
+    
+    audit_list = []
+    for i, t in enumerate(tweets[:40], 1):
+        author = t.get('author', {}).get('username', 'unknown')
+        text = t.get('text', '').replace('\n', ' ')
+        audit_list.append(f"[{i}] @{author}: {text[:150]}")
+    
+    audit_prompt = f"""
+你是一个深度观察员。请从以下推文中筛选出具有“社会观察价值”、“技术前瞻性”或“真诚生命力”的内容。
+过滤掉：纯粹的打卡、无意义的回复、复读机梗、以及纯粹的风景/食物展示（除非带有深刻反思）。
+
+返回格式 (JSON):
+{{
+    "top_indices": [1, 5, 12, 18] 
+}}
+
+推文：
+{"\n".join(audit_list)}
+"""
+    try:
+        from llm_bridge import ask_llm
+        import re
+        result, _ = ask_llm(audit_prompt, model="zhipu/glm-4-flash")
+        json_match = re.search(r'\[.*\]', result)
+        if json_match:
+            indices = json.loads(json_match.group())
+            filtered = [tweets[i-1] for i in indices if 0 < i <= len(tweets)]
+            print(f"📡 Observer Audit: Filtered {len(tweets)} -> {len(filtered)} nutritious tweets.")
+            return filtered
+    except Exception as e:
+        print(f"⚠️ Observer Audit failed: {e}")
+        return tweets[:20]
+    return tweets[:20]
+
+def analyze_tweets(all_tweets):
     """分析推文内容，提取主题和情绪"""
+    # 增加审计环节
+    tweets = nutritional_audit(all_tweets)
+    
     analysis = {
         "total": len(tweets),
         "topics": {},
@@ -88,9 +130,8 @@ def analyze_tweets(tweets):
         if any(w in text for w in ['思考', '反思', '感悟', '意识到']):
             analysis["emotions"].append("contemplation")
         
-        # 高互动内容（简单判断：长度+有无媒体）
-        if len(t.get('text', '')) > 100 or 'media' in str(t):
-            analysis["highlights"].append(t)
+        # 高互动内容
+        analysis["highlights"].append(t)
     
     return analysis
 

@@ -15,7 +15,6 @@ import sys
 sys.path.append(str(Path(__file__).parent.parent))
 sys.path.append(str(Path(__file__).parent))
 from core.utils_security import load_config, resolve_path
-from autonomous_poster import download_remote_image
 
 SEC_CONFIG = load_config()
 POSTS_DIR = resolve_path("./posts")
@@ -165,22 +164,11 @@ def save_to_minio(tweet_data, comment):
     
     model_used = tweet_data.get('model_used', 'opencode/kimi-k2.5-free')
     
-    # 下载配图到本地
-    local_media_paths = []
-    cover_image = ""
+    # 构建媒体 markdown (直接使用原始 URL)
+    media_md = ""
     for url in photos[:4]:
         if url:
-            local_path = download_remote_image(url, folder="chiikawa")
-            if local_path:
-                local_media_paths.append(local_path)
-    
-    if local_media_paths:
-        cover_image = local_media_paths[0]
-
-    # 构建媒体 markdown
-    media_md = ""
-    for lp in local_media_paths:
-        media_md += f"\n\n![推文配图](static/{lp})"
+            media_md += f"\n> ![推文配图]({url})"
     
     # 内容
     post_content = f"""---
@@ -190,10 +178,7 @@ mood: happiness=95, stress=5, energy=85, autonomy=70
 model: {model_used}
 original_time: {date_str}
 original_url: https://x.com/{author}/status/{tweet_id}
-"""
-    if cover_image:
-        post_content += f"cover: {cover_image}\n"
-    post_content += "---\n"
+---
 
 {comment}
 

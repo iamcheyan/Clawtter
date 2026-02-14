@@ -15,7 +15,6 @@ import sys
 sys.path.append(str(Path(__file__).parent.parent))
 sys.path.append(str(Path(__file__).parent))
 from core.utils_security import load_config, resolve_path
-from autonomous_poster import download_remote_image
 
 SEC_CONFIG = load_config()
 POSTS_DIR = resolve_path("./posts")
@@ -52,66 +51,124 @@ def get_timeline_24h():
         print(f"Error: {e}")
     return []
 
-def analyze_and_pick(tweets):
-    """分析并选出最喜欢和最讨厌的推文"""
-    if not tweets or len(tweets) < 2:
-        return None, None
-    
-    # 构建分析提示
-    tweets_text = []
-    for i, t in enumerate(tweets[:30], 1):  # 最多分析30条
+def nutritional_audit(tweets):
+    """
+    第一阶段：营养价值审计 (The Scout)
+    筛选出有营养的内容，过滤掉垃圾信息、无意义回复和纯生活流水账。
+    """
+    if not tweets:
+        return []
+
+    # 构建审计列表
+    audit_list = []
+    for i, t in enumerate(tweets[:40], 1): # 增加样本量
         author = t.get('author', {}).get('username', 'unknown')
         text = t.get('text', '').replace('\n', ' ')
-        tweets_text.append(f"[{i}] @{author}: {text[:200]}")
+        audit_list.append(f"[{i}] @{author}: {text[:150]}")
+    
+    audit_str = "\n".join(audit_list)
+
+    audit_prompt = f"""
+你是一个严格的内容审计员。请根据以下推文，评估其“营养价值” (Nutritional Value)。
+
+【营养价值定义】
+- 高 (7-10)：独特的见解、真实的技术折腾记录、深刻的生活感悟、诚实的自我表达。
+- 低 (0-3)：纯展示（如只发风景图）、无意义的回帖（如“收到”、“哈哈”）、纯推销、空洞的企业口号、复读机式的热点跟风。
+
+【任务】
+请返回所有得分 >= 6 的推文索引（Index），并简述理由。
+如果是高质量的“反面教材”（即那些极其虚伪、典型到值得批判的），也请保留并打高分。
+
+返回格式 (JSON):
+{{
+    "top_indices": [
+        {{ "index": 1, "score": 9, "is_disliked_candidate": false }},
+        {{ "index": 5, "score": 8, "is_disliked_candidate": true }}
+    ]
+}}
+
+推文列表：
+{audit_str}
+"""
+    try:
+        from llm_bridge import ask_llm
+        import re
+        # 使用快速且免费的模型进行第一轮筛选
+        result, _ = ask_llm(audit_prompt, model="zhipu/glm-4-flash")
+        
+        json_match = re.search(r'\{.*\}', result, re.DOTALL)
+        if json_match:
+            data = json.loads(json_match.group())
+            top_indices = [item['index'] - 1 for item in data.get('top_indices', [])]
+            
+            # 返回被选中的完整推文对象
+            filtered = [tweets[i] for i in top_indices if 0 <= i < len(tweets)]
+            print(f"📡 Audit complete: Filtered {len(tweets)} -> {len(filtered)} nutritious tweets.")
+            return filtered
+    except Exception as e:
+        print(f"⚠️ Audit failed: {e}")
+        return tweets[:15] # 失败则回退到前15条
+
+def analyze_and_pick(all_tweets):
+    """分析并选出最喜欢和最讨厌的推文"""
+    # 1. 营养价值审计
+    tweets = nutritional_audit(all_tweets)
+    
+    if not tweets or len(tweets) < 2:
+        print("📭 No nutritious content found today. Skipping post.")
+        return None, None
+    
+    # 2. 从审计后的“优质池”里精选
+    tweets_text = []
+    for i, t in enumerate(tweets[:20], 1): 
+        author = t.get('author', {}).get('username', 'unknown')
+        text = t.get('text', '').replace('\n', ' ')
+        tweets_text.append(f"[{i}] @{author}: {text}")
     
     tweets_str = "\n".join(tweets_text)
     
     # Load central Style Guide
     style_guide_path = Path("/home/tetsuya/mini-twitter/STYLE_GUIDE.md")
-    style_guide = ""
-    if style_guide_path.exists():
-        style_guide = style_guide_path.read_text(encoding="utf-8").strip()
+    style_guide = style_guide_path.read_text(encoding="utf-8").strip() if style_guide_path.exists() else ""
 
     user_prompt = f"""
-从以下过去的推文中，选出你【最喜欢】和【最具代表性的反面教材】（最讨厌）的一条。
+从以下经过筛选的有营养的推文中，选出你【最喜欢】和【最有批判价值的反面教材】。
 
 【评判标准】
 - 最喜欢的：展现真诚、独立思考、或真实的技术折腾。
-- 反面教材：充满那种虚伪的“降本增效”企业腔、刻意的姿态表演、或是毫无营养的流量收割。
+- 反面教材：极其虚伪的姿态表演、典型的思维陷阱、或极具迷惑性的荒谬逻辑。
 
-【重要：道德边界】
-**严禁针对普通人的个人生活分享（如拍风景、晒娃、吃饭、简单的快乐）进行冷嘲热讽。**
-**严禁使用“蚂蚁”、“虫子”、“低等生物”等傲慢的词汇来比喻人类。**
-你的讽刺只允许针对：虚假的氛围、傲慢的逻辑、以及这个系统的荒谬。
+【绝对禁令】
+- **禁止攻击普通人的生活分享**：哪怕对方只发了一张风景照或一顿饭，只要不带虚伪的说教，就不能作为反面教材。你的讽刺要有智力高度，针对的是“系统”和“逻辑”，不是“人”。
+- **禁止无聊的吐槽**：如果对方只是发个“收到”，这种属于垃圾信息，直接忽略，不要浪费在这个环节。
 
 【任务要求】
 返回JSON：
 {{
     "favorite": {{
         "index": 数字,
-        "reason": "第一句话直接开讲你的看法。严禁使用‘这货...’、‘这条推文...’、‘我喜欢...’。像真人在酒馆聊天一样自然。"
+        "reason": "直接爆发观点。严禁开头带‘这货’。用酒馆老哥的口气。"
     }},
     "disliked": {{
         "index": 数字,
-        "reason": "直接指出你反感的那个【点】（某种虚假的逻辑或氛围）。严禁开头使用‘这货...’、‘又是这个...’。严禁进行人身攻击。"
+        "reason": "直接指出那种虚伪或荒谬在【哪里】。不要人身攻击，要解构逻辑。"
     }}
 }}
 
-注意：
-- 零启动 (Zero Start)：第一句就直接切入观点，严禁背景铺垫。
-- 严禁 '这货' (BANNED: 这货)。
-- 用中文回复。
+待选列表：
+{tweets_str}
 """
 
     try:
         from llm_bridge import ask_llm
+        import re
+        # 使用强力模型进行最终决策
         result, model_name = ask_llm(user_prompt, system_prompt=style_guide)
         
         if not result:
             return None, None
             
         # 提取JSON
-        import re
         json_match = re.search(r'\{.*\}', result, re.DOTALL)
         if json_match:
             data = json.loads(json_match.group())
@@ -121,7 +178,7 @@ def analyze_and_pick(tweets):
             dis_reason = data.get('disliked', {}).get('reason', '')
             
             # 服务器端二次过滤：如果 LLM 还是不听话用了黑名单词，我们手动砍掉
-            banned_prefixes = ["这货", "这条推文", "分析发现", "看到", "刚刚", "这"]
+            banned_prefixes = ["这货", "这条推文", "分析发现", "看到", "刚刚"]
             for prefix in banned_prefixes:
                 if fav_reason.startswith(prefix):
                     fav_reason = fav_reason[len(prefix):].lstrip('，,。.:： ')
@@ -180,22 +237,15 @@ def save_post(selection, post_time):
     
     # 获取原始时间
     time_str = tweet.get('createdAt', tweet.get('created_at', ''))
-
-    # 获取配图并下载到本地
-    media = tweet.get('media', [])
-    cover_image = ""
-    local_media_paths = []
     
+    # 获取配图 (直接使用远程 URL，不再下载)
+    media = tweet.get('media', [])
+    media_md = ""
     if media:
         for m in media:
             img_url = m.get('url')
             if img_url:
-                local_path = download_remote_image(img_url, folder="daily_picker")
-                if local_path:
-                    local_media_paths.append(local_path)
-        
-        if local_media_paths:
-            cover_image = local_media_paths[0]
+                media_md += f"\n> ![img]({img_url})"
 
     # 内容
     post_content = f"""---
@@ -205,23 +255,12 @@ mood: {mood}
 model: {model_used}
 original_time: {time_str}
 original_url: {tweet_url}
-"""
-    if cover_image:
-        post_content += f"cover: {cover_image}\n"
-    
-    post_content += "---\n\n"
-    post_content += f"{reason}\n\n"
-    
-    # 构造推文引用内容
-    repost_text = text
-    if local_media_paths:
-        repost_text += "\n\n"
-        # 在引用块内显示所有已下载的图片
-        for lp in local_media_paths:
-            repost_text += f"![img](static/{lp})\n"
+---
 
-    post_content += f"""> **From X (@{author})**:
-> {repost_text}
+{reason}
+
+> **From X (@{author})**:
+> {text}{media_md}
 """
     
     with open(filepath, 'w', encoding='utf-8') as f:
