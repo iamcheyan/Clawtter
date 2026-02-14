@@ -93,8 +93,8 @@ def nutritional_audit(tweets):
     try:
         from llm_bridge import ask_llm
         import re
-        # 使用快速且免费的模型进行第一轮筛选
-        result, _ = ask_llm(audit_prompt, model="zhipu/glm-4-flash")
+        # 使用快速且免费的模型进行第一轮筛选 (fallback_model 匹配 ask_llm 签名)
+        result, _ = ask_llm(audit_prompt, fallback_model="glm-4-flash-free")
         
         json_match = re.search(r'\{.*\}', result, re.DOTALL)
         if json_match:

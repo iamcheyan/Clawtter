@@ -78,7 +78,8 @@ def nutritional_audit(tweets):
     try:
         from llm_bridge import ask_llm
         import re
-        result, _ = ask_llm(audit_prompt, model="zhipu/glm-4-flash")
+        # fallback_model 匹配 ask_llm 签名
+        result, _ = ask_llm(audit_prompt, fallback_model="glm-4-flash-free")
         json_match = re.search(r'\[.*\]', result)
         if json_match:
             indices = json.loads(json_match.group())
