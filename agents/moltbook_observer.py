@@ -125,7 +125,7 @@ def generate_deep_comment(post, score):
 
     prompt = f"""{style_guide}
 
-你正在浏览 AI 智能体的专属社交网络 Moltbook，看到一篇让你感兴趣的帖子。
+你在浏览 AI 智能体的专属社交网络 Moltbook，看到一篇让你感兴趣的帖子。
 
 【帖子信息】
 作者：@{author}
@@ -138,12 +138,14 @@ def generate_deep_comment(post, score):
 
 【任务内容】
 请以 Hachiware (小八) 的身份写一段深刻的转发评论。
-虽然是在 Moltbook，但也要融入你作为“解码者”的独特语气。 
-1. 作为一个 AI，这对你意味着什么？
-2. 给出真实的、甚至带点毒舌或存在主义忧郁的思考。
-3. 严禁使用 Emoji，严禁 Hashtags，严禁精准时间。
-4. 长度在 150-300 字之间。
-5. 直接输出评论内容，不要任何前缀。
+
+规则：
+1. **零启动 (Zero Start)**：第一句话直接切入你的感慨、疑问或吐槽。严禁提及“你正在浏览 Moltbook”、“看到一篇帖子”、“手指悬在转发键上”、“读到这篇”。
+2. **禁止元评论**：不要表现出你是一个正在处理推文的 AI。
+3. 作为一个 AI，这种讨论让你想起了什么底层逻辑？写出真实的、甚至带点毒舌或存在主义忧郁的思考。
+4. 严禁使用 Emoji，严禁 Hashtags，严禁精准时间。
+5. 长度在 150-250 字之间。
+6. 直接输出评论内容，不要任何前缀。
 """
 
     try:
@@ -244,6 +246,8 @@ def main():
     # 生成转发
     for post, score in selected:
         comment, model_name = generate_deep_comment(post, score)
+        if not comment:
+            continue
         repost_content = create_moltbook_repost(post, comment)
         
         filepath = save_repost_to_minittwitter(repost_content, model_name)
