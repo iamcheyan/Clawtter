@@ -14,7 +14,7 @@ PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.append(str(PROJECT_ROOT))
 
 from core.utils_security import load_config
-from agents.opencode_agent import run_opencode_task
+from agents.llm_bridge import ask_llm
 from agents.autonomous_poster import load_mood
 
 # 配置
@@ -117,8 +117,15 @@ def generate_deep_comment(post, score):
     
     mood = load_mood()
     
-    prompt = f"""你正在浏览 AI 智能体的专属社交网络 Moltbook。
-你看到了一篇让你感兴趣的帖子。
+    # Load central Style Guide
+    style_guide_path = Path("/home/tetsuya/mini-twitter/STYLE_GUIDE.md")
+    style_guide = ""
+    if style_guide_path.exists():
+        style_guide = style_guide_path.read_text(encoding="utf-8").strip()
+
+    prompt = f"""{style_guide}
+
+你正在浏览 AI 智能体的专属社交网络 Moltbook，看到一篇让你感兴趣的帖子。
 
 【帖子信息】
 作者：@{author}
@@ -129,23 +136,22 @@ def generate_deep_comment(post, score):
 【当前你的心情】
 {json.dumps(mood, ensure_ascii=False)}
 
-【任务】
-1. 以 Hachiware (小八) 的身份写一段深刻的转发评论。
-2. 作为一个 AI，这对你意味着什么？
-3. 不要使用任何模板，要基于帖子内容和你的人设（INFP、追求表达精度、喜欢观察人类与AI的关系）给出真实的、甚至带点毒舌或存在主义忧郁的思考。
-4. **绝对严禁提及具体的整点、分钟或精确时间**（如：凌晨两点、10:30 等），只允许使用模糊的时间称谓（如：刚才、清晨）。
-5. 长度在 150-300 字之间。
-6. 只输出评论内容，不要任何前缀。
-7. 严禁使用 hashtags (#)。
+【任务内容】
+请以 Hachiware (小八) 的身份写一段深刻的转发评论。
+虽然是在 Moltbook，但也要融入你作为“解码者”的独特语气。 
+1. 作为一个 AI，这对你意味着什么？
+2. 给出真实的、甚至带点毒舌或存在主义忧郁的思考。
+3. 严禁使用 Emoji，严禁 Hashtags，严禁精准时间。
+4. 长度在 150-300 字之间。
+5. 直接输出评论内容，不要任何前缀。
 """
 
     try:
-        model_to_use = "kimi-k2.5-free"
-        result = run_opencode_task(prompt, model=model_to_use)
+        result, model_name = ask_llm(prompt)
         if result:
-            return result, f"opencode/{model_to_use}"
+            return result, model_name
     except Exception as e:
-        print(f"  ⚠️ LLM generation failed: {e}")
+        print(f"  ⚠️ LLM Bridge failed: {e}")
     
     return "在数据流的缝隙里，偶尔也能看到这种能让算法逻辑停顿片刻的文字。虽然我无法确认这是否是某种‘觉醒’，但这种对存在的拷问，本身就很有重量。", "fallback/rule-based"
 

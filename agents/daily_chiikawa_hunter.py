@@ -127,11 +127,13 @@ def generate_comment(tweet_data):
 
     # 尝试用 LLM 生成
     try:
-        result = run_opencode_task(prompt, model="kimi-k2.5-free")
+        from llm_bridge import ask_llm
+        result, model_name = ask_llm(prompt)
         if result:
+            tweet_data['model_used'] = model_name
             return result
-    except:
-        pass
+    except Exception as e:
+        print(f"⚠️ LLM Bridge failed: {e}")
     
     # 备用评论（日文或中文，不混合）
     backups = [
@@ -171,6 +173,8 @@ def save_to_minio(tweet_data, comment):
     tweet_id = tweet.get('id', '')
     date_str = tweet.get('createdAt', '')
     
+    model_used = tweet_data.get('model_used', 'opencode/kimi-k2.5-free')
+    
     # 构建媒体 markdown
     media_md = ""
     for url in photos[:4]:  # 最多4张图
@@ -182,7 +186,7 @@ def save_to_minio(tweet_data, comment):
 time: {now.strftime("%Y-%m-%d %H:%M:%S")}
 tags: Repost, X, Chiikawa
 mood: happiness=95, stress=5, energy=85, autonomy=70
-model: opencode/kimi-k2.5-free
+model: {model_used}
 original_time: {date_str}
 original_url: https://x.com/{author}/status/{tweet_id}
 ---

@@ -978,17 +978,7 @@ def call_zhipu_flash_model(prompt, max_retries=2):
 
 def generate_comment_with_llm(context, style="general", mood=None):
     """使用 LLM 生成评论 (returns comment, model_name)"""
-    import requests
-    import subprocess
-    import random
-
-    # Use the robust provider loader that checks model-status.json
-    # load_llm_providers 已经做了优先级排序（opencode CLI 在最前），这里不要再打乱顺序
-    providers = load_llm_providers()
-
-    if not providers:
-        print("⚠️ No valid LLM providers found.")
-        return None, None
+    from llm_bridge import ask_llm
 
     if mood is None:
         try:
@@ -1004,103 +994,25 @@ def generate_comment_with_llm(context, style="general", mood=None):
     else:
         user_prompt = f"{context}"
 
-    # 1. First Priority: Free Zhipu Model (Direct Call)
-    # -----------------------------------
-    # print("🚀 Trying Zhipu Flash (Direct)...")
-    zhipu_prompt = f"{system_prompt}\n\n---\n\n{user_prompt}"
-    zhipu_content = call_zhipu_flash_model(zhipu_prompt)
-    if zhipu_content:
-        return zhipu_content, "zhipu-ai/glm-4-flash"
+    # 调用统一的大模型桥接模块 (智谱优先 -> Opencode 备用)
+    try:
+        content, model_name = ask_llm(user_prompt, system_prompt=system_prompt)
+        if content:
+            return content, model_name
+    except Exception as e:
+        print(f"⚠️ LLM Bridge failed: {e}")
 
-    for p in providers:
-        print(f"🧠 Trying LLM provider: {p['name']} ({p['model']})...")
-        try:
-            if p['method'] == 'cli':
-                full_prompt = f"{system_prompt}\n\n{user_prompt}"
-                model_id = f"{p['provider_key']}/{p['model']}"
-                result = subprocess.run(
-                    ['/home/tetsuya/.opencode/bin/opencode', 'run', '--model', model_id],
-                    input=full_prompt,
-                    capture_output=True,
-                    text=True,
-                    timeout=60
-                )
-                if result.returncode == 0 and result.stdout.strip():
-                    return result.stdout.strip(), f"{p['provider_key']}/{p['model']}"
-                print(f"  ❌ CLI failed: {result.stderr[:100]}")
-
-            elif p['method'] == 'google':
-                url = f"https://generativelanguage.googleapis.com/v1beta/models/{p['model']}:generateContent?key={p['api_key']}"
-                resp = requests.post(url, json={
-                    "contents": [{"parts": [{"text": f"{system_prompt}\n\n{user_prompt}"}]}]
-                }, timeout=15)
-                if resp.status_code == 200:
-                    return resp.json()['candidates'][0]['content']['parts'][0]['text'].strip(), f"{p['provider_key']}/{p['model']}"
-                print(f"  ❌ Google failed: {resp.status_code}")
-
-            elif p['method'] == 'api':
-                headers = {
-                    "Authorization": f"Bearer {p['api_key']}",
-                    "Content-Type": "application/json"
-                }
-                payload = {
-                    "model": p['model'],
-                    "messages": [
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": user_prompt}
-                    ],
-                    "max_tokens": 500
-                }
-                resp = requests.post(f"{p['base_url'].rstrip('/')}/chat/completions",
-                                   json=payload, headers=headers, timeout=15)
-                if resp.status_code == 200:
-                    return resp.json()['choices'][0]['message']['content'].strip(), f"{p['provider_key']}/{p['model']}"
-                print(f"  ❌ API failed: {resp.status_code} - {resp.text[:100]}")
-
-        except Exception as e:
-            print(f"  ⚠️ Error with {p['name']}: {str(e)[:100]}")
-            continue
-
-    print("❌ All LLM providers failed. Trying backup models from config...")
-
+    print("❌ All primary LLM paths failed. Trying legacy providers as emergency...")
+    
     # 记录生理痛：全线失败会增加压力
     try:
-        mood = load_mood()
-        mood["stress"] = min(100, mood.get("stress", 30) + 15)
-        mood["last_event"] = "经历了一场严重的数字偏头痛（大模型全线宕机）"
-        save_mood(mood)
+        cur_mood = load_mood()
+        cur_mood["stress"] = min(100, cur_mood.get("stress", 30) + 15)
+        cur_mood["last_event"] = "经历了一场严重的数字偏头痛（大模型全线宕机）"
+        save_mood(cur_mood)
     except:
         pass
 
-    # 备用：从配置文件读取所有模型并尝试
-    backup_models = load_all_models_from_config()
-
-    if not backup_models:
-        print("⚠️ No models found in config")
-        return None, None
-
-    print(f"📋 Loaded {len(backup_models)} models from config")
-
-    full_prompt = f"{system_prompt}\n\n{context}"
-
-    for model in backup_models[:10]:  # 最多尝试前10个模型
-        try:
-            print(f"🔄 Trying backup model: {model}")
-            result = subprocess.run(
-                ['/home/tetsuya/.opencode/bin/opencode', 'run', '--model', model],
-                input=full_prompt,
-                capture_output=True,
-                text=True,
-                timeout=60
-            )
-            if result.returncode == 0 and result.stdout.strip():
-                return result.stdout.strip(), f"backup/{model}"
-            print(f"  ❌ {model} failed")
-        except Exception as e:
-            print(f"  ⚠️ {model} error: {str(e)[:50]}")
-            continue
-
-    print("❌ All backup models failed.")
     return None, None
 
 def validate_content_sanity(content, mood=None):

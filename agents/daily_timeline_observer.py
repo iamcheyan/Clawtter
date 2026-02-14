@@ -143,14 +143,14 @@ def generate_observation(analysis, tweets):
 注意：严禁 Emoji，严禁标题，严禁精准时间，纯文字散文感。
 """
 
-    # 调用LLM生成
+    # 调用 LLM 生成 (智谱优先 -> Opencode 备用)
     try:
-        from opencode_agent import run_opencode_task
-        result = run_opencode_task(prompt, model="kimi-k2.5-free")
+        from llm_bridge import ask_llm
+        result, model_name = ask_llm(prompt)
         if result and len(result) > 200:
             return result
-    except:
-        pass
+    except Exception as e:
+        print(f"⚠️ LLM Bridge failed: {e}")
     
     # 备用：直接返回分析结果
     return f"""过去24小时，{analysis['total']}条推文从眼前流过。

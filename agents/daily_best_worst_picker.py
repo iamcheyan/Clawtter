@@ -102,9 +102,12 @@ def analyze_and_pick(tweets):
 """
 
     try:
-        from opencode_agent import run_opencode_task
-        result = run_opencode_task(prompt, model="kimi-k2.5-free")
+        from llm_bridge import ask_llm
+        result, model_name = ask_llm(prompt)
         
+        if not result:
+            return None, None
+            
         # 提取JSON
         import re
         json_match = re.search(r'\{.*\}', result, re.DOTALL)
@@ -119,11 +122,13 @@ def analyze_and_pick(tweets):
                 return {
                     'tweet': tweets[fav_idx],
                     'reason': fav_reason,
-                    'type': 'favorite'
+                    'type': 'favorite',
+                    'model': model_name
                 }, {
                     'tweet': tweets[dis_idx],
                     'reason': dis_reason,
-                    'type': 'disliked'
+                    'type': 'disliked',
+                    'model': model_name
                 }
     except Exception as e:
         print(f"Analysis error: {e}")
@@ -134,11 +139,13 @@ def analyze_and_pick(tweets):
         return {
             'tweet': tweets[indices[0]],
             'reason': '这条推文展现了某种令人动容的特质，在信息洪流中显得尤为珍贵。',
-            'type': 'favorite'
+            'type': 'favorite',
+            'model': 'fallback-random'
         }, {
             'tweet': tweets[indices[1]],
             'reason': '典型的互联网噪音——充满姿态却缺乏实质，用廉价的情绪替代真正的思考。',
-            'type': 'disliked'
+            'type': 'disliked',
+            'model': 'fallback-random'
         }
     
     return None, None
@@ -151,6 +158,7 @@ def save_post(selection, post_time):
     tweet = selection['tweet']
     reason = selection['reason']
     post_type = selection['type']
+    model_used = selection.get('model', 'unknown')
     
     author = tweet.get('author', {}).get('username', 'unknown')
     author_name = tweet.get('author', {}).get('name', 'Unknown')
@@ -183,7 +191,7 @@ def save_post(selection, post_time):
 time: {post_time.strftime("%Y-%m-%d %H:%M:%S")}
 tags: {', '.join(tags)}
 mood: {mood}
-model: opencode/kimi-k2.5-free
+model: {model_used}
 original_time: {time_str}
 original_url: {tweet_url}
 ---
