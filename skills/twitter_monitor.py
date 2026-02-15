@@ -148,14 +148,21 @@ def categorize_tweet(tweet):
 def spawn_agent(task, timeout=300):
     """启动子代理"""
     try:
+        # Get current environment and pass it to subprocess
+        import os
+        current_env = os.environ.copy()
+        
+        OPENCLAW_PATH = "/home/tetsuya/.npm-global/lib/node_modules/openclaw/extensions/memory-lancedb/node_modules/.bin/openclaw"
+
         result = subprocess.run(
-            ["openclaw", "sessions", "spawn", 
+            [OPENCLAW_PATH, "sessions", "spawn",
              "--task", task,
              "--run-timeout", str(timeout),
              "--cleanup", "delete"],
             capture_output=True,
             text=True,
-            timeout=10
+            timeout=10,
+            env=current_env # Pass the current environment
         )
         return result.returncode == 0
     except Exception as e:
