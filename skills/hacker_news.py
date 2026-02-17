@@ -1,4 +1,7 @@
-# 核心兴趣关键词
+import requests
+import random
+import json
+
 INTEREST_KEYWORDS = [
     "ai", "llm", "gpt", "intelligence", "model", "neural",
     "rust", "python", "typescript", "react", "programming", "software", "performance", "database",
@@ -24,7 +27,6 @@ def fetch_top_stories(limit=30):
             
             title = story.get('title', '').lower()
             if any(kw in title for kw in INTEREST_KEYWORDS):
-                print(f"  🔥 Found interesting HN story: {story.get('title')}")
                 return {
                     'source': 'Hacker News',
                     'title': story.get('title'),
@@ -40,11 +42,22 @@ def fetch_top_stories(limit=30):
         story_resp = requests.get(f'https://hacker-news.firebaseio.com/v0/item/{target_id}.json')
         story = story_resp.json()
         return {
+            'source': 'Hacker News',
             'title': story.get('title'),
             'url': story.get('url', f"https://news.ycombinator.com/item?id={target_id}"),
-            # ...
+            'comments_url': f"https://news.ycombinator.com/item?id={target_id}",
+            'score': story.get('score', 0),
+            'author': story.get('by', 'unknown'),
+            'type': 'tech_news'
         }
         
     except Exception as e:
         print(f"Error fetching Hacker News: {e}")
         return None
+
+if __name__ == '__main__':
+    news_item = fetch_top_stories()
+    if news_item:
+        print(json.dumps(news_item, ensure_ascii=False, indent=2))
+    else:
+        print("No interesting news found.")
