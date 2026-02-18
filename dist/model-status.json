@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-18 19:00:17",
+  "generated_at": "2026-02-18 20:00:20",
   "summary": {
     "passed": 7,
     "failed": 8,
@@ -10,21 +10,21 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.92s)",
+      "status": "OK (0.84s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (2.08s)",
+      "status": "OK (1.75s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.00s)",
+      "status": "OK (0.95s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -52,7 +52,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.26s)",
+      "status": "OK (1.47s)",
       "response": "\u4f60\u597d\ud83d\udc4b\uff01\u5f88\u9ad8\u5174\u89c1\u5230\u4f60\uff0c"
     },
     {
@@ -88,7 +88,7 @@
       "model": "moonshotai/kimi-k2.5",
       "success": false,
       "status": "HTTP Timeout",
-      "response": "'NoneType' object has no attribute 'strip'"
+      "response": "HTTPSConnectionPool(host='integrate.api.nvidia.com', port=44"
     },
     {
       "provider": "openai-codex",
