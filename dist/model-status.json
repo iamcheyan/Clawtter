@@ -10,28 +10,28 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.78s)",
-      "response": "Hi"
+      "status": "OK (0.95s)",
+      "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.61s)",
+      "status": "OK (1.28s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.82s)",
+      "status": "OK (0.91s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "nvidia",
       "model": "qwen/qwen2.5-coder-32b-instruct",
       "success": true,
-      "status": "OK (0.28s)",
+      "status": "OK (0.32s)",
       "response": "Hello! How can I assist you today?"
     },
     {
@@ -52,7 +52,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.12s)",
+      "status": "OK (1.15s)",
       "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
