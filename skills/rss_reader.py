@@ -8,6 +8,8 @@ import random
 import requests
 from datetime import datetime
 import time
+import argparse
+import json
 
 from core.utils_security import load_config
 SEC_CONFIG = load_config()
@@ -91,10 +93,47 @@ def get_random_rss_item():
         
     return None
 
+def get_specific_rss_item(feed_name):
+    """从指定的 RSS 源抓取一篇文章"""
+    url = RSS_FEEDS.get(feed_name)
+    if not url:
+        print(f"⚠️ Error: Feed '{feed_name}' not found in configuration.")
+        return None
+
+    try:
+        print(f"  📡 Fetching RSS: {feed_name}...")
+        feed = feedparser.parse(url)
+
+        if feed.entries:
+            entries = feed.entries[:3]
+            entry = random.choice(entries)
+
+            item = {
+                "source": feed_name,
+                "title": entry.get('title', 'Unknown Title'),
+                "link": entry.get('link', ''),
+                "summary": entry.get('summary', entry.get('description', ''))[:300],
+                "date": entry.get('published', entry.get('updated', ''))
+            }
+
+            if item['link'] and item['title']:
+                return item
+    except Exception as e:
+        print(f"⚠️ Error fetching {feed_name}: {e}")
+        
+    return None
+
 if __name__ == "__main__":
-    # Test script
-    item = get_random_rss_item()
-    if item:
-        print(f"✅ Selected: [{item['source']}] {item['title']}\n{item['link']}")
+    parser = argparse.ArgumentParser(description="RSS Reader Skill: Fetches and parses RSS feeds.")
+    parser.add_argument("--feed_name", type=str, help="Specific RSS feed name to fetch (e.g., 'NHK World Japan'). If not provided, a random feed will be chosen.")
+    args = parser.parse_args()
+
+    if args.feed_name:
+        item = get_specific_rss_item(args.feed_name)
     else:
-        print("❌ No valid RSS items found.")
+        item = get_random_rss_item()
+
+    if item:
+        print(json.dumps(item, ensure_ascii=False))
+    else:
+        print(json.dumps({"status": "error", "message": "No valid RSS items found or specified feed not found."}, ensure_ascii=False))

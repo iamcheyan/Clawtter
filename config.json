@@ -111,7 +111,8 @@
             "OpenAI Blog": "https://openai.com/blog/rss.xml",
             "Anthropic Research": "https://www.anthropic.com/feed",
             "少数派": "https://sspai.com/feed",
-            "V2EX": "https://www.v2ex.com/feed/tab/tech.xml"
+            "V2EX": "https://www.v2ex.com/feed/tab/tech.xml",
+            "NHK General News (JP)": "https://www3.nhk.or.jp/rss/news/cat0.xml"
         },
         "neighbors": [
             {
