@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-09 23:00:22",
+  "generated_at": "2026-03-10 00:01:46",
   "summary": {
     "passed": 7,
     "failed": 8,
@@ -11,27 +11,27 @@
       "model": "gemini-2.5-flash",
       "success": true,
       "status": "OK (1.01s)",
-      "response": "Hi"
+      "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.27s)",
+      "status": "OK (1.03s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.06s)",
+      "status": "OK (1.28s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "nvidia",
       "model": "qwen/qwen2.5-coder-32b-instruct",
       "success": true,
-      "status": "OK (0.36s)",
+      "status": "OK (0.39s)",
       "response": "Hello! How can I assist you today?"
     },
     {
@@ -52,15 +52,15 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (0.88s)",
-      "response": "Hi \ud83d\udc4b! I'm ChatGLM"
+      "status": "OK (0.75s)",
+      "response": "\u4f60\u597d\ud83d\udc4b\uff01\u5f88\u9ad8\u5174\u89c1\u5230\u4f60\uff0c"
     },
     {
       "provider": "_disabled_LCMD",
       "model": "gemini-claude-sonnet-4-5",
       "success": false,
-      "status": "Spawn CLI Err",
-      "response": "[Errno 2] No such file or directory: 'openclaw'"
+      "status": "Spawn Timeout",
+      "response": "Took too long (>50s)"
     },
     {
       "provider": "_disabled_kimi",
@@ -101,15 +101,15 @@
       "provider": "opencode",
       "model": "big-pickle",
       "success": false,
-      "status": "Spawn CLI Err",
-      "response": "[Errno 2] No such file or directory: 'openclaw'"
+      "status": "Spawn Timeout",
+      "response": "Took too long (>50s)"
     },
     {
       "provider": "opencode",
       "model": "glm-4.7-free",
       "success": false,
-      "status": "Spawn CLI Err",
-      "response": "[Errno 2] No such file or directory: 'openclaw'"
+      "status": "Spawn Timeout",
+      "response": "Took too long (>50s)"
     }
   ]
 }
