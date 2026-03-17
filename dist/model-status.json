@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-03-18 04:00:25",
+  "generated_at": "2026-03-18 05:00:16",
   "summary": {
-    "passed": 6,
-    "failed": 9,
+    "passed": 7,
+    "failed": 8,
     "total": 15
   },
   "results": [
@@ -10,21 +10,28 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.29s)",
+      "status": "OK (1.40s)",
+      "response": "Response matched but unexpected format"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "success": true,
+      "status": "OK (1.79s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.77s)",
-      "response": "Hi"
+      "status": "OK (0.96s)",
+      "response": "Response matched but unexpected format"
     },
     {
       "provider": "nvidia",
       "model": "qwen/qwen2.5-coder-32b-instruct",
       "success": true,
-      "status": "OK (0.33s)",
+      "status": "OK (0.28s)",
       "response": "Hello! How can I assist you today?"
     },
     {
@@ -45,8 +52,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (0.91s)",
-      "response": "Hi \ud83d\udc4b! I'm ChatGLM"
+      "status": "OK (0.71s)",
+      "response": "\u4f60\u597d\ud83d\udc4b\uff01\u5f88\u9ad8\u5174\u89c1\u5230\u4f60\uff0c"
     },
     {
       "provider": "_disabled_LCMD",
@@ -77,18 +84,11 @@
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
     },
     {
-      "provider": "google",
-      "model": "gemini-2.5-pro",
-      "success": false,
-      "status": "HTTP Timeout",
-      "response": "HTTPSConnectionPool(host='generativelanguage.googleapis.com'"
-    },
-    {
       "provider": "nvidia-kimi",
       "model": "moonshotai/kimi-k2.5",
       "success": false,
       "status": "HTTP Timeout",
-      "response": "HTTPSConnectionPool(host='integrate.api.nvidia.com', port=44"
+      "response": "'NoneType' object has no attribute 'strip'"
     },
     {
       "provider": "openai-codex",
