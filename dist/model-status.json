@@ -1,37 +1,37 @@
 {
-  "generated_at": "2026-03-21 01:01:11",
+  "generated_at": "2026-04-19 02:00:16",
   "summary": {
     "passed": 7,
-    "failed": 8,
-    "total": 15
+    "failed": 10,
+    "total": 17
   },
   "results": [
     {
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.95s)",
-      "response": "Response matched but unexpected format"
+      "status": "OK (1.05s)",
+      "response": "Hi"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.77s)",
+      "status": "OK (1.13s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.09s)",
+      "status": "OK (1.39s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "nvidia",
       "model": "qwen/qwen2.5-coder-32b-instruct",
       "success": true,
-      "status": "OK (0.26s)",
+      "status": "OK (0.31s)",
       "response": "Hello! How can I assist you today?"
     },
     {
@@ -52,29 +52,15 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (0.78s)",
-      "response": "Hello \ud83d\udc4b! How can I assist you"
+      "status": "OK (1.07s)",
+      "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
       "provider": "_disabled_LCMD",
       "model": "gemini-claude-sonnet-4-5",
       "success": false,
-      "status": "Auth Failed",
-      "response": "API key rejected"
-    },
-    {
-      "provider": "_disabled_kimi",
-      "model": "moonshot-v1-32k",
-      "success": false,
-      "status": "Err 401",
-      "response": "{\"error\":{\"message\":\"Invalid Authentication\",\"type\":\"invalid"
-    },
-    {
-      "provider": "_disabled_kimi",
-      "model": "moonshot-v1-8k",
-      "success": false,
-      "status": "Err 401",
-      "response": "{\"error\":{\"message\":\"Invalid Authentication\",\"type\":\"invalid"
+      "status": "Spawn CLI Err",
+      "response": "[Errno 2] No such file or directory: 'openclaw'"
     },
     {
       "provider": "_disabled_openrouter",
@@ -82,6 +68,34 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+    },
+    {
+      "provider": "google-gemini-cli",
+      "model": "gemini-2.5-flash",
+      "success": false,
+      "status": "Err 400",
+      "response": "{   \"error\": {     \"code\": 400,     \"message\": \"API key not"
+    },
+    {
+      "provider": "google-gemini-cli",
+      "model": "gemini-2.5-pro",
+      "success": false,
+      "status": "Err 400",
+      "response": "{   \"error\": {     \"code\": 400,     \"message\": \"API key not"
+    },
+    {
+      "provider": "kimi-coding",
+      "model": "moonshot-v1-32k",
+      "success": false,
+      "status": "Err 403",
+      "response": "{\"error\":{\"message\":\"Kimi For Coding is currently only avail"
+    },
+    {
+      "provider": "kimi-coding",
+      "model": "moonshot-v1-8k",
+      "success": false,
+      "status": "Err 403",
+      "response": "{\"error\":{\"message\":\"Kimi For Coding is currently only avail"
     },
     {
       "provider": "nvidia-kimi",
@@ -101,15 +115,15 @@
       "provider": "opencode",
       "model": "big-pickle",
       "success": false,
-      "status": "Spawn Timeout",
-      "response": "Took too long (>50s)"
+      "status": "Spawn CLI Err",
+      "response": "[Errno 2] No such file or directory: 'openclaw'"
     },
     {
       "provider": "opencode",
       "model": "glm-4.7-free",
       "success": false,
-      "status": "Auth Failed",
-      "response": "API key rejected"
+      "status": "Spawn CLI Err",
+      "response": "[Errno 2] No such file or directory: 'openclaw'"
     }
   ]
 }
