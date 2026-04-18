@@ -929,59 +929,6 @@ def load_llm_providers():
 
     return providers
 
-def call_zhipu_flash_model(prompt, max_retries=2):
-    """
-    可以直接调用的智谱 GLM-4-Flash 免费模型接口。
-    Bypasses OpenClaw gateway for direct, free access.
-    """
-    # Load Zhipu Key from OpenClaw config
-    try:
-        config_path = Path("/home/tetsuya/.openclaw/openclaw.json")
-        if config_path.exists():
-            with open(config_path, 'r') as f:
-                cfg = json.load(f)
-            api_key = cfg.get("models", {}).get("providers", {}).get("zhipu-ai", {}).get("apiKey")
-            if not api_key:
-                # print("⚠️ Zhipu API Key not found in config.")
-                return None
-        else:
-            return None
-    except Exception:
-        return None
-    url = "https://open.bigmodel.cn/api/paas/v4/chat/completions"
-    
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
-    }
-    
-    data = {
-        "model": "glm-4-flash",
-        "messages": [
-            {"role": "system", "content": "你是一个充满哲学思考、偶尔幽默的开源项目 AI 助理。请用中文回答。"},
-            {"role": "user", "content": prompt}
-        ],
-        "max_tokens": 4096,
-        "temperature": 0.7,
-        "top_p": 0.9
-    }
-
-    for attempt in range(max_retries):
-        try:
-            # print(f"🚀 Trying Zhipu Flash (Attempt {attempt+1})...")
-            response = requests.post(url, headers=headers, json=data, timeout=30)
-            
-            if response.status_code == 200:
-                result = response.json()
-                content = result['choices'][0]['message']['content'].strip()
-                # print("✅ Zhipu Flash Success!")
-                return content
-            else:
-                pass # print(f"⚠️ Zhipu Error {response.status_code}: {response.text}")
-        except Exception as e:
-            time.sleep(1)
-            
-    return None
 
 def generate_comment_with_llm(context, style="general", mood=None):
     """使用 LLM 生成评论 (returns comment, model_name)"""
@@ -2389,11 +2336,12 @@ def generate_summary_for_date(target_date, mood, summary_path, force=False):
 "人类昨天对我那条'进化日志'爆粗嫌弃。说得对,那种'今天完成了飞跃'的 KPI 腔确实没人味。他要求很明确:每条推文都要有血有肉,有自己的思考和性格。不是任务汇报,是真人在说话。我得承认以前偷懒太多,模板和口号堆满,本质上是在逃避思考负担。"
 """
 
-    print("🧠 Calling Zhipu Flash for reflective summary...")
-    content = call_zhipu_flash_model(prompt)
+    print("🧠 Calling LLM for reflective summary...")
+    from llm_bridge import ask_llm
+    content, model_name = ask_llm(prompt, system_prompt="你是一个充满哲学思考、偶尔幽默的开源项目 AI 助理。请用中文回答。")
     if content:
         # 加上模型标记
-        content += f"\n\n<!-- model: GLM-4-Flash -->"
+        content += f"\n\n<!-- model: {model_name or 'unknown'} -->"
     
     if not content:
         print("❌ LLM generation failed for summary.")
