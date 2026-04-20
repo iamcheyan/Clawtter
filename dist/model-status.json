@@ -1,37 +1,30 @@
 {
-  "generated_at": "2026-04-21 02:00:17",
+  "generated_at": "2026-04-21 03:00:16",
   "summary": {
-    "passed": 7,
-    "failed": 10,
+    "passed": 6,
+    "failed": 11,
     "total": 17
   },
   "results": [
     {
       "provider": "google",
-      "model": "gemini-2.5-flash",
-      "success": true,
-      "status": "OK (2.35s)",
-      "response": "Response matched but unexpected format"
-    },
-    {
-      "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.20s)",
+      "status": "OK (1.51s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (2.35s)",
+      "status": "OK (2.36s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "nvidia",
       "model": "qwen/qwen2.5-coder-32b-instruct",
       "success": true,
-      "status": "OK (0.31s)",
+      "status": "OK (0.29s)",
       "response": "Hello! How can I assist you today?"
     },
     {
@@ -68,6 +61,13 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-2.5-flash",
+      "success": false,
+      "status": "Err 503",
+      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
     },
     {
       "provider": "google-gemini-cli",
