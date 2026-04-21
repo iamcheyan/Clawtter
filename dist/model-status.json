@@ -1,37 +1,30 @@
 {
-  "generated_at": "2026-04-21 19:00:34",
+  "generated_at": "2026-04-21 20:00:23",
   "summary": {
-    "passed": 7,
-    "failed": 10,
+    "passed": 6,
+    "failed": 11,
     "total": 17
   },
   "results": [
     {
       "provider": "google",
-      "model": "gemini-2.5-flash",
-      "success": true,
-      "status": "OK (1.31s)",
-      "response": "Response matched but unexpected format"
-    },
-    {
-      "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.36s)",
+      "status": "OK (1.58s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.30s)",
+      "status": "OK (0.82s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "nvidia",
       "model": "qwen/qwen2.5-coder-32b-instruct",
       "success": true,
-      "status": "OK (0.31s)",
+      "status": "OK (0.29s)",
       "response": "Hello! How can I assist you today?"
     },
     {
@@ -52,7 +45,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.10s)",
+      "status": "OK (3.02s)",
       "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
@@ -68,6 +61,13 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-2.5-flash",
+      "success": false,
+      "status": "Err 503",
+      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
     },
     {
       "provider": "google-gemini-cli",
@@ -102,7 +102,7 @@
       "model": "moonshotai/kimi-k2.5",
       "success": false,
       "status": "HTTP Timeout",
-      "response": "HTTPSConnectionPool(host='integrate.api.nvidia.com', port=44"
+      "response": "'NoneType' object has no attribute 'strip'"
     },
     {
       "provider": "openai-codex",
