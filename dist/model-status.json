@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-22 16:00:34",
+  "generated_at": "2026-04-22 17:00:34",
   "summary": {
     "passed": 7,
     "failed": 10,
@@ -10,21 +10,21 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (2.81s)",
+      "status": "OK (0.85s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.26s)",
+      "status": "OK (1.39s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.20s)",
+      "status": "OK (6.00s)",
       "response": "Response matched but unexpected format"
     },
     {
