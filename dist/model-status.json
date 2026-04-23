@@ -1,23 +1,30 @@
 {
-  "generated_at": "2026-04-23 19:00:34",
+  "generated_at": "2026-04-23 20:00:20",
   "summary": {
-    "passed": 5,
-    "failed": 12,
+    "passed": 6,
+    "failed": 11,
     "total": 17
   },
   "results": [
     {
       "provider": "google",
+      "model": "gemini-2.5-flash",
+      "success": true,
+      "status": "OK (1.86s)",
+      "response": "Response matched but unexpected format"
+    },
+    {
+      "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.23s)",
+      "status": "OK (4.36s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "nvidia",
       "model": "qwen/qwen2.5-coder-32b-instruct",
       "success": true,
-      "status": "OK (0.30s)",
+      "status": "OK (0.31s)",
       "response": "Hello! How can I assist you today?"
     },
     {
@@ -38,8 +45,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.73s)",
-      "response": "Hi \ud83d\udc4b! I'm ChatGLM"
+      "status": "OK (1.48s)",
+      "response": "\u4f60\u597d\ud83d\udc4b\uff01\u6211\u662f\u4eba\u5de5\u667a\u80fd\u52a9\u624b\uff0c"
     },
     {
       "provider": "_disabled_LCMD",
@@ -54,13 +61,6 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
-    },
-    {
-      "provider": "google",
-      "model": "gemini-2.5-flash",
-      "success": false,
-      "status": "Err 503",
-      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
     },
     {
       "provider": "google-alt",
@@ -102,7 +102,7 @@
       "model": "moonshotai/kimi-k2.5",
       "success": false,
       "status": "HTTP Timeout",
-      "response": "HTTPSConnectionPool(host='integrate.api.nvidia.com', port=44"
+      "response": "'NoneType' object has no attribute 'strip'"
     },
     {
       "provider": "openai-codex",
