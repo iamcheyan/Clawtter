@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-26 12:00:56",
+  "generated_at": "2026-04-26 13:00:56",
   "summary": {
     "passed": 6,
     "failed": 11,
@@ -11,20 +11,20 @@
       "model": "gemini-2.5-flash",
       "success": true,
       "status": "OK (1.04s)",
-      "response": "Hi"
+      "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.17s)",
+      "status": "OK (1.00s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.02s)",
+      "status": "OK (1.01s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -45,7 +45,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.19s)",
+      "status": "OK (1.05s)",
       "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
@@ -102,7 +102,7 @@
       "model": "moonshotai/kimi-k2.5",
       "success": false,
       "status": "HTTP Timeout",
-      "response": "HTTPSConnectionPool(host='integrate.api.nvidia.com', port=44"
+      "response": "'NoneType' object has no attribute 'strip'"
     },
     {
       "provider": "openai-codex",
