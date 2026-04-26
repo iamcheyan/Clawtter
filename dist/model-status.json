@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-26 14:00:57",
+  "generated_at": "2026-04-26 15:00:57",
   "summary": {
     "passed": 6,
     "failed": 11,
@@ -10,21 +10,21 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.29s)",
+      "status": "OK (1.25s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.46s)",
+      "status": "OK (1.75s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (7.67s)",
+      "status": "OK (1.46s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -45,7 +45,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.54s)",
+      "status": "OK (0.93s)",
       "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
