@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-05-09 21:00:52",
+  "generated_at": "2026-05-09 22:01:08",
   "summary": {
-    "passed": 7,
-    "failed": 10,
+    "passed": 6,
+    "failed": 11,
     "total": 17
   },
   "results": [
@@ -10,29 +10,22 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.96s)",
-      "response": "Hi"
+      "status": "OK (1.11s)",
+      "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (3.35s)",
+      "status": "OK (2.17s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.92s)",
+      "status": "OK (1.00s)",
       "response": "Response matched but unexpected format"
-    },
-    {
-      "provider": "nvidia",
-      "model": "qwen/qwen2.5-coder-32b-instruct",
-      "success": true,
-      "status": "OK (0.29s)",
-      "response": "Hello! How can I assist you today?"
     },
     {
       "provider": "qwen-portal",
@@ -52,8 +45,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (2.25s)",
-      "response": "Hi there \ud83d\udc4b! How can I assist"
+      "status": "OK (5.58s)",
+      "response": "Hello \ud83d\udc4b! I'm ChatGLM"
     },
     {
       "provider": "_disabled_LCMD",
@@ -96,6 +89,13 @@
       "success": false,
       "status": "Err 402",
       "response": "{\"error\":{\"message\":\"We're unable to verify your membership"
+    },
+    {
+      "provider": "nvidia",
+      "model": "qwen/qwen2.5-coder-32b-instruct",
+      "success": false,
+      "status": "HTTP Timeout",
+      "response": "HTTPSConnectionPool(host='integrate.api.nvidia.com', port=44"
     },
     {
       "provider": "nvidia-kimi",
