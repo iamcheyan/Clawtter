@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-06-05 10:00:52",
+  "generated_at": "2026-06-05 11:01:00",
   "summary": {
-    "passed": 6,
-    "failed": 11,
+    "passed": 5,
+    "failed": 12,
     "total": 17
   },
   "results": [
@@ -10,21 +10,14 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.74s)",
+      "status": "OK (0.80s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.55s)",
-      "response": "Response matched but unexpected format"
-    },
-    {
-      "provider": "google-alt",
-      "model": "gemini-2.5-flash",
-      "success": true,
-      "status": "OK (0.94s)",
+      "status": "OK (1.57s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -45,8 +38,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (2.46s)",
-      "response": "Hi \ud83d\udc4b! I'm ChatGLM"
+      "status": "OK (2.23s)",
+      "response": "Hello \ud83d\udc4b! How can I help you"
     },
     {
       "provider": "_disabled_LCMD",
@@ -61,6 +54,13 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+    },
+    {
+      "provider": "google-alt",
+      "model": "gemini-2.5-flash",
+      "success": false,
+      "status": "Err 503",
+      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
     },
     {
       "provider": "google-gemini-cli",
