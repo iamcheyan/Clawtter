@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-08 19:00:51",
+  "generated_at": "2026-06-08 20:00:53",
   "summary": {
     "passed": 6,
     "failed": 11,
@@ -10,21 +10,21 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.91s)",
-      "response": "Response matched but unexpected format"
+      "status": "OK (2.68s)",
+      "response": "Hi"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.67s)",
+      "status": "OK (1.53s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.80s)",
+      "status": "OK (1.84s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -45,8 +45,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.98s)",
-      "response": "Hello \ud83d\udc4b! I'm ChatGLM"
+      "status": "OK (1.45s)",
+      "response": "Hello \ud83d\udc4b! How can I help you"
     },
     {
       "provider": "_disabled_LCMD",
