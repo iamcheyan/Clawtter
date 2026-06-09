@@ -1,31 +1,17 @@
 {
-  "generated_at": "2026-06-09 14:00:51",
+  "generated_at": "2026-06-09 15:01:10",
   "summary": {
-    "passed": 6,
-    "failed": 11,
+    "passed": 4,
+    "failed": 13,
     "total": 17
   },
   "results": [
     {
       "provider": "google",
-      "model": "gemini-2.5-flash",
-      "success": true,
-      "status": "OK (1.56s)",
-      "response": "Hi"
-    },
-    {
-      "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.22s)",
+      "status": "OK (1.37s)",
       "response": "Response matched but unexpected format"
-    },
-    {
-      "provider": "google-alt",
-      "model": "gemini-2.5-flash",
-      "success": true,
-      "status": "OK (1.72s)",
-      "response": "Hi"
     },
     {
       "provider": "qwen-portal",
@@ -45,8 +31,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (2.42s)",
-      "response": "Hi \ud83d\udc4b! I'm ChatGLM"
+      "status": "OK (1.98s)",
+      "response": "Hello \ud83d\udc4b! How can I assist you"
     },
     {
       "provider": "_disabled_LCMD",
@@ -61,6 +47,20 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-2.5-flash",
+      "success": false,
+      "status": "HTTP Timeout",
+      "response": "HTTPSConnectionPool(host='generativelanguage.googleapis.com'"
+    },
+    {
+      "provider": "google-alt",
+      "model": "gemini-2.5-flash",
+      "success": false,
+      "status": "Err 503",
+      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
     },
     {
       "provider": "google-gemini-cli",
