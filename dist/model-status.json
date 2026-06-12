@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-12 21:01:12",
+  "generated_at": "2026-06-12 22:00:52",
   "summary": {
     "passed": 5,
     "failed": 12,
@@ -8,17 +8,17 @@
   "results": [
     {
       "provider": "google",
-      "model": "gemini-2.5-flash",
+      "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (3.03s)",
+      "status": "OK (1.87s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.95s)",
-      "response": "Hi"
+      "status": "OK (1.44s)",
+      "response": "Response matched but unexpected format"
     },
     {
       "provider": "qwen-portal",
@@ -38,8 +38,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.30s)",
-      "response": "Hi \ud83d\udc4b! I'm ChatGLM"
+      "status": "OK (3.42s)",
+      "response": "Hi \ud83d\udc4b! Hello there, how can"
     },
     {
       "provider": "_disabled_LCMD",
@@ -57,10 +57,10 @@
     },
     {
       "provider": "google",
-      "model": "gemini-2.5-pro",
+      "model": "gemini-2.5-flash",
       "success": false,
-      "status": "HTTP Timeout",
-      "response": "HTTPSConnectionPool(host='generativelanguage.googleapis.com'"
+      "status": "Err 503",
+      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
     },
     {
       "provider": "google-gemini-cli",
