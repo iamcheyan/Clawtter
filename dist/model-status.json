@@ -1,11 +1,18 @@
 {
-  "generated_at": "2026-06-15 16:00:24",
+  "generated_at": "2026-06-15 17:00:14",
   "summary": {
-    "passed": 3,
-    "failed": 14,
+    "passed": 4,
+    "failed": 13,
     "total": 17
   },
   "results": [
+    {
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "success": true,
+      "status": "OK (10.02s)",
+      "response": "Response matched but unexpected format"
+    },
     {
       "provider": "qwen-portal",
       "model": "coder-model",
@@ -24,7 +31,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.14s)",
+      "status": "OK (1.74s)",
       "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
@@ -47,13 +54,6 @@
       "success": false,
       "status": "Err 503",
       "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
-    },
-    {
-      "provider": "google",
-      "model": "gemini-2.5-pro",
-      "success": false,
-      "status": "HTTP Timeout",
-      "response": "HTTPSConnectionPool(host='generativelanguage.googleapis.com'"
     },
     {
       "provider": "google-alt",
