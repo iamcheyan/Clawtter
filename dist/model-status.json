@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-16 15:00:25",
+  "generated_at": "2026-06-16 16:00:25",
   "summary": {
     "passed": 3,
     "failed": 14,
@@ -24,7 +24,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.11s)",
+      "status": "OK (3.05s)",
       "response": "\u4f60\u597d\ud83d\udc4b\uff01\u5f88\u9ad8\u5174\u89c1\u5230\u4f60\uff0c"
     },
     {
