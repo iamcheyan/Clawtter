@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-16 13:00:08",
+  "generated_at": "2026-06-16 14:00:07",
   "summary": {
     "passed": 5,
     "failed": 12,
@@ -10,15 +10,15 @@
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.17s)",
+      "status": "OK (1.02s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.05s)",
-      "response": "Hi"
+      "status": "OK (1.17s)",
+      "response": "Response matched but unexpected format"
     },
     {
       "provider": "qwen-portal",
@@ -38,7 +38,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.86s)",
+      "status": "OK (1.94s)",
       "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
