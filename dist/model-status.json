@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-06-21 01:00:04",
+  "generated_at": "2026-06-21 02:00:04",
   "summary": {
-    "passed": 5,
-    "failed": 12,
+    "passed": 6,
+    "failed": 11,
     "total": 17
   },
   "results": [
@@ -10,21 +10,21 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.05s)",
+      "status": "OK (0.92s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.30s)",
+      "status": "OK (1.51s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.96s)",
+      "status": "OK (0.99s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -40,6 +40,13 @@
       "success": true,
       "status": "OAUTH MODE",
       "response": "Managed by OpenClaw"
+    },
+    {
+      "provider": "zhipu-ai",
+      "model": "glm-4-flash",
+      "success": true,
+      "status": "OK (1.02s)",
+      "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
       "provider": "_disabled_LCMD",
@@ -117,13 +124,6 @@
       "success": false,
       "status": "Spawn CLI Err",
       "response": "[Errno 2] No such file or directory: 'openclaw'"
-    },
-    {
-      "provider": "zhipu-ai",
-      "model": "glm-4-flash",
-      "success": false,
-      "status": "Err 502",
-      "response": "<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML 2.0//EN\">\r <html>"
     }
   ]
 }
