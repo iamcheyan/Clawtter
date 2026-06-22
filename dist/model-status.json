@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-06-22 16:00:07",
+  "generated_at": "2026-06-22 17:00:08",
   "summary": {
-    "passed": 4,
-    "failed": 13,
+    "passed": 5,
+    "failed": 12,
     "total": 17
   },
   "results": [
@@ -10,7 +10,14 @@
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.29s)",
+      "status": "OK (1.89s)",
+      "response": "Response matched but unexpected format"
+    },
+    {
+      "provider": "google-alt",
+      "model": "gemini-2.5-flash",
+      "success": true,
+      "status": "OK (1.57s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -31,7 +38,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (2.51s)",
+      "status": "OK (1.21s)",
       "response": "\u4f60\u597d\ud83d\udc4b\uff01\u5f88\u9ad8\u5174\u89c1\u5230\u4f60\uff0c"
     },
     {
@@ -50,13 +57,6 @@
     },
     {
       "provider": "google",
-      "model": "gemini-2.5-flash",
-      "success": false,
-      "status": "Err 503",
-      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
-    },
-    {
-      "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": false,
       "status": "Err 503",
