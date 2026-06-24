@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-24 23:00:08",
+  "generated_at": "2026-06-25 00:00:22",
   "summary": {
     "passed": 4,
     "failed": 13,
@@ -7,10 +7,10 @@
   },
   "results": [
     {
-      "provider": "google",
-      "model": "gemini-2.5-pro",
+      "provider": "google-alt",
+      "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.52s)",
+      "status": "OK (2.17s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -31,7 +31,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (3.36s)",
+      "status": "OK (4.66s)",
       "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
@@ -56,11 +56,11 @@
       "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
     },
     {
-      "provider": "google-alt",
-      "model": "gemini-2.5-flash",
+      "provider": "google",
+      "model": "gemini-2.5-pro",
       "success": false,
-      "status": "Err 503",
-      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
+      "status": "HTTP Timeout",
+      "response": "HTTPSConnectionPool(host='generativelanguage.googleapis.com'"
     },
     {
       "provider": "google-gemini-cli",
