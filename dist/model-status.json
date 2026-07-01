@@ -1,24 +1,17 @@
 {
-  "generated_at": "2026-07-01 11:00:24",
+  "generated_at": "2026-07-01 12:00:24",
   "summary": {
-    "passed": 5,
-    "failed": 12,
+    "passed": 4,
+    "failed": 13,
     "total": 17
   },
   "results": [
     {
-      "provider": "google",
-      "model": "gemini-2.5-flash",
-      "success": true,
-      "status": "OK (1.08s)",
-      "response": "Response matched but unexpected format"
-    },
-    {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.23s)",
-      "response": "Hi"
+      "status": "OK (2.10s)",
+      "response": "Response matched but unexpected format"
     },
     {
       "provider": "qwen-portal",
@@ -38,8 +31,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (0.96s)",
-      "response": "\u4f60\u597d\ud83d\udc4b\uff01\u5f88\u9ad8\u5174\u89c1\u5230\u4f60\uff0c"
+      "status": "OK (1.29s)",
+      "response": "Hello \ud83d\udc4b! How can I assist you"
     },
     {
       "provider": "_disabled_LCMD",
@@ -54,6 +47,13 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-2.5-flash",
+      "success": false,
+      "status": "Err 503",
+      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
     },
     {
       "provider": "google",
