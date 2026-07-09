@@ -1,11 +1,18 @@
 {
-  "generated_at": "2026-07-10 04:00:03",
+  "generated_at": "2026-07-10 05:00:03",
   "summary": {
-    "passed": 3,
-    "failed": 14,
+    "passed": 4,
+    "failed": 13,
     "total": 17
   },
   "results": [
+    {
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "success": true,
+      "status": "OK (1.63s)",
+      "response": "Response matched but unexpected format"
+    },
     {
       "provider": "qwen-portal",
       "model": "coder-model",
@@ -24,7 +31,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.85s)",
+      "status": "OK (1.27s)",
       "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
@@ -44,13 +51,6 @@
     {
       "provider": "google",
       "model": "gemini-2.5-flash",
-      "success": false,
-      "status": "Err 404",
-      "response": "{   \"error\": {     \"code\": 404,     \"message\": \"This model m"
-    },
-    {
-      "provider": "google",
-      "model": "gemini-2.5-pro",
       "success": false,
       "status": "Err 404",
       "response": "{   \"error\": {     \"code\": 404,     \"message\": \"This model m"
