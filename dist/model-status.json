@@ -1,16 +1,30 @@
 {
-  "generated_at": "2026-07-10 05:00:03",
+  "generated_at": "2026-07-10 06:00:03",
   "summary": {
-    "passed": 4,
-    "failed": 13,
+    "passed": 6,
+    "failed": 11,
     "total": 17
   },
   "results": [
     {
       "provider": "google",
+      "model": "gemini-2.5-flash",
+      "success": true,
+      "status": "OK (1.11s)",
+      "response": "Response matched but unexpected format"
+    },
+    {
+      "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.63s)",
+      "status": "OK (1.06s)",
+      "response": "Response matched but unexpected format"
+    },
+    {
+      "provider": "google-alt",
+      "model": "gemini-2.5-flash",
+      "success": true,
+      "status": "OK (1.10s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -31,7 +45,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (1.27s)",
+      "status": "OK (1.07s)",
       "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
@@ -47,20 +61,6 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
-    },
-    {
-      "provider": "google",
-      "model": "gemini-2.5-flash",
-      "success": false,
-      "status": "Err 404",
-      "response": "{   \"error\": {     \"code\": 404,     \"message\": \"This model m"
-    },
-    {
-      "provider": "google-alt",
-      "model": "gemini-2.5-flash",
-      "success": false,
-      "status": "Err 404",
-      "response": "{   \"error\": {     \"code\": 404,     \"message\": \"This model m"
     },
     {
       "provider": "google-gemini-cli",
