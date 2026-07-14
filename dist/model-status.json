@@ -1,31 +1,24 @@
 {
-  "generated_at": "2026-07-14 10:00:06",
+  "generated_at": "2026-07-14 11:00:24",
   "summary": {
-    "passed": 6,
-    "failed": 11,
+    "passed": 4,
+    "failed": 13,
     "total": 17
   },
   "results": [
     {
       "provider": "google",
-      "model": "gemini-2.5-flash",
-      "success": true,
-      "status": "OK (1.19s)",
-      "response": "Response matched but unexpected format"
-    },
-    {
-      "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.41s)",
+      "status": "OK (1.00s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.00s)",
-      "response": "Hi"
+      "status": "OK (1.25s)",
+      "response": "Response matched but unexpected format"
     },
     {
       "provider": "qwen-portal",
@@ -42,13 +35,6 @@
       "response": "Managed by OpenClaw"
     },
     {
-      "provider": "zhipu-ai",
-      "model": "glm-4-flash",
-      "success": true,
-      "status": "OK (0.99s)",
-      "response": "Hi \ud83d\udc4b! I'm ChatGLM"
-    },
-    {
       "provider": "_disabled_LCMD",
       "model": "gemini-claude-sonnet-4-5",
       "success": false,
@@ -61,6 +47,13 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-2.5-flash",
+      "success": false,
+      "status": "Err 503",
+      "response": "{   \"error\": {     \"code\": 503,     \"message\": \"This model i"
     },
     {
       "provider": "google-gemini-cli",
@@ -124,6 +117,13 @@
       "success": false,
       "status": "Spawn CLI Err",
       "response": "[Errno 2] No such file or directory: 'openclaw'"
+    },
+    {
+      "provider": "zhipu-ai",
+      "model": "glm-4-flash",
+      "success": false,
+      "status": "HTTP Timeout",
+      "response": "HTTPSConnectionPool(host='open.bigmodel.cn', port=443): Max"
     }
   ]
 }
