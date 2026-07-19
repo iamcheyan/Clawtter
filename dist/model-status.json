@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-19 23:00:04",
+  "generated_at": "2026-07-20 00:00:08",
   "summary": {
     "passed": 6,
     "failed": 11,
@@ -10,21 +10,21 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.51s)",
-      "response": "Response matched but unexpected format"
+      "status": "OK (1.55s)",
+      "response": "Hi"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.31s)",
+      "status": "OK (1.76s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.40s)",
+      "status": "OK (1.07s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -45,8 +45,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (4.30s)",
-      "response": "\u4f60\u597d\ud83d\udc4b\uff01\u6211\u662f\u4eba\u5de5\u667a\u80fd\u52a9\u624b\uff0c"
+      "status": "OK (1.22s)",
+      "response": "Hi there \ud83d\udc4b! How can I assist"
     },
     {
       "provider": "_disabled_LCMD",
@@ -80,15 +80,15 @@
       "provider": "kimi-coding",
       "model": "moonshot-v1-32k",
       "success": false,
-      "status": "Err 402",
-      "response": "{\"error\":{\"message\":\"We're unable to verify your membership"
+      "status": "Err 500",
+      "response": "{\"error\":{\"message\":\"The server had an error while processin"
     },
     {
       "provider": "kimi-coding",
       "model": "moonshot-v1-8k",
       "success": false,
-      "status": "Err 402",
-      "response": "{\"error\":{\"message\":\"We're unable to verify your membership"
+      "status": "Err 500",
+      "response": "{\"error\":{\"message\":\"The server had an error while processin"
     },
     {
       "provider": "nvidia",
