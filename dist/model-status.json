@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-19 22:00:04",
+  "generated_at": "2026-07-19 23:00:04",
   "summary": {
-    "passed": 5,
-    "failed": 12,
+    "passed": 6,
+    "failed": 11,
     "total": 17
   },
   "results": [
@@ -10,21 +10,21 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.20s)",
+      "status": "OK (1.51s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (1.85s)",
+      "status": "OK (1.31s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.06s)",
+      "status": "OK (1.40s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -40,6 +40,13 @@
       "success": true,
       "status": "OAUTH MODE",
       "response": "Managed by OpenClaw"
+    },
+    {
+      "provider": "zhipu-ai",
+      "model": "glm-4-flash",
+      "success": true,
+      "status": "OK (4.30s)",
+      "response": "\u4f60\u597d\ud83d\udc4b\uff01\u6211\u662f\u4eba\u5de5\u667a\u80fd\u52a9\u624b\uff0c"
     },
     {
       "provider": "_disabled_LCMD",
@@ -117,13 +124,6 @@
       "success": false,
       "status": "Spawn CLI Err",
       "response": "[Errno 2] No such file or directory: 'openclaw'"
-    },
-    {
-      "provider": "zhipu-ai",
-      "model": "glm-4-flash",
-      "success": false,
-      "status": "Err 500",
-      "response": "{\"error\":{\"code\":\"1234\",\"message\":\"\u7f51\u7edc\u9519\u8bef\uff0c\u9519\u8befid\uff1a202607192100029"
     }
   ]
 }
