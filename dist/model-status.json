@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-20 18:00:21",
+  "generated_at": "2026-07-20 19:00:17",
   "summary": {
     "passed": 6,
     "failed": 11,
@@ -10,21 +10,21 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (1.66s)",
+      "status": "OK (1.18s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google",
       "model": "gemini-2.5-pro",
       "success": true,
-      "status": "OK (18.85s)",
+      "status": "OK (14.06s)",
       "response": "Response matched but unexpected format"
     },
     {
       "provider": "google-alt",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (2.06s)",
+      "status": "OK (1.23s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -45,8 +45,8 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (2.97s)",
-      "response": "Hello \ud83d\udc4b! How can I assist you"
+      "status": "OK (1.59s)",
+      "response": "Hi \ud83d\udc4b! Hello there, how can"
     },
     {
       "provider": "_disabled_LCMD",
