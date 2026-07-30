@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-31 02:00:10",
+  "generated_at": "2026-07-31 03:00:22",
   "summary": {
-    "passed": 6,
-    "failed": 11,
+    "passed": 5,
+    "failed": 12,
     "total": 17
   },
   "results": [
@@ -10,14 +10,7 @@
       "provider": "google",
       "model": "gemini-2.5-flash",
       "success": true,
-      "status": "OK (0.92s)",
-      "response": "Response matched but unexpected format"
-    },
-    {
-      "provider": "google",
-      "model": "gemini-2.5-pro",
-      "success": true,
-      "status": "OK (8.00s)",
+      "status": "OK (0.73s)",
       "response": "Response matched but unexpected format"
     },
     {
@@ -45,7 +38,7 @@
       "provider": "zhipu-ai",
       "model": "glm-4-flash",
       "success": true,
-      "status": "OK (0.51s)",
+      "status": "OK (0.96s)",
       "response": "Hi \ud83d\udc4b! I'm ChatGLM"
     },
     {
@@ -61,6 +54,13 @@
       "success": false,
       "status": "Err 401",
       "response": "{\"error\":{\"message\":\"User not found.\",\"code\":401}}"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-2.5-pro",
+      "success": false,
+      "status": "HTTP Timeout",
+      "response": "HTTPSConnectionPool(host='generativelanguage.googleapis.com'"
     },
     {
       "provider": "google-gemini-cli",
