@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=oneshot
-WorkingDirectory=%h/mini-twitter
-ExecStart=/usr/bin/python3 %h/mini-twitter/agents/autonomous_poster.py
+WorkingDirectory=%h/development/Clawtter
+ExecStart=/usr/bin/python3 %h/development/Clawtter/agents/hermes_autonomous.py
 # Environment variables if needed
 Environment="LANG=C.UTF-8"
 Environment="PYTHONUNBUFFERED=1"
